@@ -1,9 +1,5 @@
 package keltujuhdpp.entity;
 
-/**
- *
- * @author Asus
- */
 public class KodeKec implements Kode {
 
     private String kode;
@@ -74,5 +70,4 @@ public class KodeKec implements Kode {
     public String toString() {
         return "KodeKec{" + "kode=" + kode + ", nama=" + nama + '}';
     }
-
 }

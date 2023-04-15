@@ -1,0 +1,195 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+skinparam class {
+    BackgroundColor white
+    ArrowColor black
+    BorderColor gray
+}
+
+interface Kode {
+  +getKode(): String
+  +getNama(): String
+  +setKode(kode: String): void
+  +setNama(nama: String): void
+}
+
+class DPP {
+  -status: int
+  -deskripsiStatus: String
+  -kunjungan: int
+  -deskripsiKunjungan: String
+  +DPP()
+  +DPP(status: int, kunjungan: int)
+  +getStatus(): int
+  +setStatus(status: int): void
+  +getKunjungan(): int
+  +setKunjungan(kunjungan: int): void
+  +toString(): String
+}
+
+class KIP {
+  -kju: String
+  -noUrut: Integer
+  -kodeProv: KodeProv
+  -kodeKab: KodeKab
+  -kodeKec: KodeKec
+  --
+  +KIP()
+  +KIP(KodeProv, KodeKab)
+  +KIP(String, Integer, KodeProv, KodeKab, KodeKec)
+  +getKju(): String
+  +setKju(String): void
+  +getNoUrut(): Integer
+  +setNoUrut(Integer): void
+  +getKodeProv(): KodeProv
+  +setKodeProv(KodeProv): void
+  +getKodeKab(): KodeKab
+  +setKodeKab(KodeKab): void
+  +getKodeKec(): KodeKec
+  +setKodeKec(KodeKec): void
+  +toString(): String
+}
+
+class KodeKab {
+-kode: String
+-nama: String
+-listKodeKec: List<KodeKec>
++KodeKab(kode: String, nama: String)
++KodeKab()
++getKode(): String
++setKode(kode: String): void
++getNama(): String
++setNama(nama: String): void
++getListKodeKec(): List<KodeKec>
++addKodeKec(kodeKec: KodeKec): void
++toString(): String
+}
+
+class KodeKec {
+    -kode: String
+    -nama: String
+    +validasiKode(String kode): void
+    +validasiNama(String nama): void
+    +setKode(String kode): void
+    +setNama(String nama): void
+    +getKode(): String
+    +getNama(): String
+    +toString(): String
+}
+
+class KodeProv {
+  - String nama
+  - String kode
+  - List<KodeKab> listKodeKab
+  + KodeProv(String nama, String kode)
+  + setNama(String nama)
+  + getNama(): String
+  + setKode(String kode)
+  + getKode(): String
+  + getListKodeKab(): List<KodeKab>
+  + addKodeKab(KodeKab kodeKab)
+  + toString(): String
+}
+
+class Perusahaan {
+    - KIP kodeWilayah
+    - String nama
+    - String alamat
+    - List<String> noTelp
+    - int bbhu
+    - DPP dpp
+    - Subsektor subsektor
+    - String usahaUtama
+    - String faksimili
+    - String deskripsiBbhu
+    - String deskripsiUsahaUtama
+    --
+    + Perusahaan()
+    + getFaksimili(): String
+    + setFaksimili(faksimili: String): void
+    + getKodeWilayah(): KIP
+    + setKodeWilayah(kodeWilayah: KIP): void
+    + getNama(): String
+    + setNama(nama: String): void
+    + getAlamat(): String
+    + setAlamat(alamat: String): void
+    + getNoTelp(): List<String>
+    + addNoTelp(noTelp: String): void
+    + getBbhu(): int
+    + setBbhu(bbhu: int): void
+    + getDpp(): DPP
+    + setDpp(dpp: DPP): void
+    + getSubsektor(): Subsektor
+    + setSubsektor(subsektor: Subsektor): void
+    + getUsahaUtama(): String
+    + setUsahaUtama(usahaUtama: String): void
+}
+
+class Subsektor {
+    -tanamPangan: Integer
+    -hortikultura: Integer
+    -peternakan: Integer
+    -kehutanan: Integer
+    -perikanan: Integer
+    -kodePerkebunan: String
+    -jenisPerkebunan: String
+    
+    +toString(): String
+    +getHortikultura(): Integer
+    +setHortikultura(hortikultura: Integer): void
+    +getTanamPangan(): Integer
+    +setTanamPangan(tanamPangan: Integer): void
+    +getPeternakan(): Integer
+    +setPeternakan(peternakan: Integer): void
+    +getKehutanan(): Integer
+    +setKehutanan(kehutanan: Integer): void
+    +getPerikanan(): Integer
+    +setPerikanan(perikanan: Integer): void
+    +validasiId(kode: Integer): Integer
+    +getJenisPerkebunan(): String
+    +getKodePerkebunan(): String
+    +setKodePerkebunan(kodePerkebunan: String): void
+}
+
+Kode <|.. KodeProv
+Kode <|.. KodeKab
+Kode <|.. KodeKec
+
+abstract class Form {
+    - errorMessages: List<String>
+    + validate(): void
+    + addErrorMessages(errorMessage: String): void
+    + getErrorMessages(): List<String>
+}
+
+class KuesionerDPP {
+- kodeProv: KodeProv
+- kodeKab: KodeKab
+- periodeData: int
+- jumlahPerusahaan: int
+- listPerusahaan: List<Perusahaan>
++ KuesionerDPP()
++ KuesionerDPP(kodeProv: KodeProv, kodeKab: KodeKab)
++ getKodeProv(): KodeProv
++ getKodeKab(): KodeKab
++ setKodeProv(kodeProv: KodeProv): void
++ setKodeKab(kodeKab: KodeKab): void
++ getPeriodeData(): int
++ setPeriodeData(periodeData: int): void
++ getListPerusahaan(): List<Perusahaan>
++ addPerusahaan(perusahaan: Perusahaan): void
++ totalPerusahaan(): int
++ validateKodeKec(listKodeKec: List<KodeKec>, kodeKec: KodeKec): boolean
++ cekKonten(subsektor: Subsektor): Boolean
++ validasiNolSatu(x: int): boolean
++ cekDuplikasiDuaPerusahaan(perusahaan1: Perusahaan, perusahaan2: Perusahaan): boolean
++ cekDuplikasi(): boolean
++ cekDuplikasiGiani(): void
++ validate(): void
+}
+
+KuesionerDPP <|-- Form
+
+@enduml

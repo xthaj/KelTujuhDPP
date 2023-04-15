@@ -3,10 +3,6 @@ package keltujuhdpp.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Asus
- */
 public class Perusahaan {
 
     private KIP kodeWilayah;

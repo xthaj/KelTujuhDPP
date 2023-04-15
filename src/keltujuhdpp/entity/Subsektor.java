@@ -1,9 +1,5 @@
 package keltujuhdpp.entity;
 
-/**
- *
- * @author Giani
- */
 public class Subsektor {
 
     private Integer tanamPangan, hortikultura, peternakan, kehutanan, perikanan;
@@ -167,5 +163,4 @@ public class Subsektor {
                 this.jenisPerkebunan = "Kode Perkebunan Salah";
         }
     }
-
 }

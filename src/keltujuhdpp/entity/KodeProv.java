@@ -3,10 +3,6 @@ package keltujuhdpp.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Asus
- */
 public class KodeProv implements Kode {
 
     private String nama;
@@ -58,5 +54,4 @@ public class KodeProv implements Kode {
     public String toString() {
         return "KodeProv{" + "nama=" + nama + ", kode=" + kode + '}';
     }
-
 }

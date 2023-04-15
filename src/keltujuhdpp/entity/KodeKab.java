@@ -3,10 +3,6 @@ package keltujuhdpp.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Asus
- */
 public class KodeKab implements Kode {
 
     private String kode;
@@ -68,5 +64,4 @@ public class KodeKab implements Kode {
     public String toString() {
         return "KodeKab{" + "kode=" + kode + ", nama=" + nama + '}';
     }
-
 }

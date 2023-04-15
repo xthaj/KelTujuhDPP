@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import keltujuhdpp.form.KuesionerDPP;
 
-/**
- *
- * @author Asus
- */
 public class KIP {
 
     private String kju;

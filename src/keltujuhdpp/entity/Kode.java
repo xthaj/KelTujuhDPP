@@ -1,9 +1,5 @@
 package keltujuhdpp.entity;
 
-/**
- *
- * @author Asus
- */
 public interface Kode {
     public String getKode();
     public String getNama();

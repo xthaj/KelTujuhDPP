@@ -1,9 +1,14 @@
+/*
+Kelompok 7
+222111930 Atha JR
+222111938 Azhari
+222111971 Cindy Septia Trionita
+222112085 Hamdani
+222112212 Muhammad Fauzan Azima. A
+*/
+
 package keltujuhdpp.entity;
 
-/**
- *
- * @author Asus
- */
 public class DPP {
 
     private int status;
