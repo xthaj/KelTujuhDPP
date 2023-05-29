@@ -1,7 +1,17 @@
+/*
+Kelompok 7
+222111930 Atha JR
+222111938 Azhari
+222111971 Cindy Septia Trionita
+222112085 Hamdani
+222112212 Muhammad Fauzan Azima. A
+*/
+
 package keltujuhdpp.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Perusahaan {
 
@@ -33,14 +43,17 @@ public class Perusahaan {
 
     public void setKodeWilayah(KIP kodeWilayah) {
         this.kodeWilayah = kodeWilayah;
-//        kodeWilayah.getKodeKab().setNoUrut(kodeWilayah.getKodeKab().getNoUrut()+1);
-//        kodeWilayah.setNoUrut(kodeWilayah.getKodeKab().getNoUrut());
     }
 
     public String getNama() {
         return nama.toUpperCase();
     }
 
+    //Metode replaceAll() menggantikan semua kemunculan String di String lain yang cocok dengan regex.
+    //Metode replaceAll() membutuhkan dua parameter.
+    //regex - regex (bisa berupa string biasa) yang akan diganti
+    //penggantian - penggantian urutan karakter
+    //Bagian dibawah ini menunjukan apabila input nama perusahaan selaian huruf a-z dan A-Z serta angka 0-9 maka akan direplace menjadi tidak ada.
     public void setNama(String nama) {
         this.nama = nama.replaceAll("[^a-z | ^A-Z| ^0-9|^ ]", "");
     }
@@ -57,6 +70,7 @@ public class Perusahaan {
         return noTelp;
     }
 
+    //Bagian dibawah ini menunjukan apabila input nomor telepon selain angka 0-9 dan () maka akan direplace menjadi tidak ada.
     public void addNoTelp(String noTelp) {
         this.noTelp.add(noTelp.replaceAll("[^0-9|^()|^ ]", ""));
     }
@@ -65,38 +79,39 @@ public class Perusahaan {
         return bbhu;
     }
 
+    //set Keterangan Kode Bentuk Badan Hukum Usaha
     public void setBbhu(int bbhu) {
         this.bbhu = bbhu;
         switch (bbhu) {
             case 1:
-                deskripsiBbhu = " Perusahaan Negara";
+                deskripsiBbhu = "Perusahaan Negara";
                 break;
             case 2:
-                deskripsiBbhu = " Perusahaan Daerah";
+                deskripsiBbhu = "Perusahaan Daerah";
                 break;
             case 3:
-                deskripsiBbhu = " Persero";
+                deskripsiBbhu = "Persero";
                 break;
             case 4:
-                deskripsiBbhu = " Perum";
+                deskripsiBbhu = "Perum";
                 break;
             case 5:
-                deskripsiBbhu = " PPT";
+                deskripsiBbhu = "PPT";
                 break;
             case 6:
-                deskripsiBbhu = " NV";
+                deskripsiBbhu = "NV";
                 break;
             case 7:
-                deskripsiBbhu = " CV";
+                deskripsiBbhu = "CV";
                 break;
             case 8:
-                deskripsiBbhu = " Firma";
+                deskripsiBbhu = "Firma";
                 break;
             case 9:
-                deskripsiBbhu = " Koperasi/KUD";
+                deskripsiBbhu = "Koperasi/KUD";
                 break;
             case 10:
-                deskripsiBbhu = " yayasan";
+                deskripsiBbhu = "Yayasan";
                 break;
         }
     }
@@ -121,6 +136,7 @@ public class Perusahaan {
         return usahaUtama;
     }
 
+    //set Keterangan Kode Jenis Usaha Utama
     public void setUsahaUtama(String usahaUtama) {
         this.usahaUtama = usahaUtama;
         switch (this.usahaUtama) {
@@ -206,7 +222,18 @@ public class Perusahaan {
 
     @Override
     public String toString() {
-        return "Perusahaan{" + "kodeWilayah=" + kodeWilayah + ", nama=" + nama + ", alamat=" + alamat + ", noTelp=" + noTelp + ", bbhu=" + bbhu + ", dpp=" + dpp + ", subsektor=" + subsektor + ", usahaUtama=" + usahaUtama + ", faksimili=" + faksimili + ", deskripsiBbhu=" + deskripsiBbhu + ", deskripsiUsahaUtama=" + deskripsiUsahaUtama + '}';
+        return 
+                "\nPerusahaan {" + 
+                "\nKode Wilayah\t= " + kodeWilayah + 
+                "\nNama\t\t= " + nama + 
+                "\nAlamat\t\t= " + alamat + 
+                "\nNo Tel\t\t= " + noTelp + 
+                "\nBBHU\t\t= " + bbhu + 
+                "\nDPP\t\t= " + dpp + 
+                "\nSubsektor\t= " + subsektor + 
+                "\nUsaha Utama\t= " + usahaUtama + 
+                "\nFaksimile\t= " + faksimili + 
+                "\nDeskripsi BBHU\t= " + deskripsiBbhu + 
+                "\nDeskripsi Usaha Utama = " + deskripsiUsahaUtama + "\n}\n";
     }
-
 }

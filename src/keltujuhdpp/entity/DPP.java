@@ -69,6 +69,11 @@ public class DPP {
 
     @Override
     public String toString() {
-        return "DPP{" + "status= " + status + ", deskripsi Status= " + deskripsiStatus + ", kunjungan= " + kunjungan + ", deskripsi Kunjungan= " + deskripsiKunjungan + '}';
+        return "DPP {" + 
+                "\n\t\t  Status\t\t= " + status + 
+                "\n\t\t  Deskripsi Status\t= " + deskripsiStatus + 
+                "\n\t\t  Kunjungan\t\t= " + kunjungan + 
+                "\n\t\t  Deskripsi Kunjungan  = " + deskripsiKunjungan +
+                "}";
     }
 }
