@@ -38,13 +38,11 @@ public class SignUp extends javax.swing.JFrame {
         passwordLabel = new javax.swing.JLabel();
         confirmpasswordLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
-        handphoneLabel = new javax.swing.JLabel();
         idLabel = new javax.swing.JLabel();
         idTextField = new javax.swing.JTextField();
         usernameTextField = new javax.swing.JTextField();
         passwordTextField = new javax.swing.JTextField();
         confirmpasswordTextField = new javax.swing.JTextField();
-        handphoneTextField = new javax.swing.JTextField();
         emailTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -100,15 +98,10 @@ public class SignUp extends javax.swing.JFrame {
         emailLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         emailLabel.setText("Email");
 
-        handphoneLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        handphoneLabel.setForeground(new java.awt.Color(229, 88, 7));
-        handphoneLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        handphoneLabel.setText("No Handphone");
-
         idLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         idLabel.setForeground(new java.awt.Color(229, 88, 7));
         idLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        idLabel.setText("ID (Nomor Pegawai)");
+        idLabel.setText("NIK Pegawai");
 
         idTextField.setText("\n");
 
@@ -122,8 +115,6 @@ public class SignUp extends javax.swing.JFrame {
         passwordTextField.setText("\n");
 
         confirmpasswordTextField.setText("\n");
-
-        handphoneTextField.setText("\n");
 
         emailTextField.setText("\n");
 
@@ -148,11 +139,6 @@ public class SignUp extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(278, 278, 278)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(handphoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(handphoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,13 +218,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(handphoneLabel))
-                    .addComponent(handphoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(78, 78, 78)
                 .addComponent(jButton1))
         );
 
@@ -324,8 +304,6 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JTextField confirmpasswordTextField;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailTextField;
-    private javax.swing.JLabel handphoneLabel;
-    private javax.swing.JTextField handphoneTextField;
     private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idTextField;
     private javax.swing.JButton jButton1;
