@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import keltujuhdpp.form.KuesionerDPP;
 
-/**
- *
- * @author Asus
- */
 public class KIP {
 
     private String kju;
@@ -72,7 +68,13 @@ public class KIP {
 
     @Override
     public String toString() {
-        return "KIP{" + "kju=" + kju + ", noUrut=" + noUrut + ", kodeProv=" + kodeProv + ", kodeKab=" + kodeKab + ", kodeKec=" + kodeKec + '}';
+        return "KIP {" + 
+                "\n\t\t  KJU\t\t= " + kju + 
+                "\n\t\t  noUrut\t= " + noUrut + 
+                "\n\t\t  kodeProv\t= " + kodeProv + 
+                "\n\t\t  kodeKab\t= " + kodeKab + 
+                "\n\t\t  kodeKec\t= " + kodeKec + 
+                "\n\t\t  }";
     }
 
 }

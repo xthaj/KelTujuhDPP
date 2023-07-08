@@ -9,10 +9,6 @@ import keltujuhdpp.entity.KodeProv;
 import keltujuhdpp.entity.Perusahaan;
 import keltujuhdpp.entity.Subsektor;
 
-/**
- *
- * @author Asus
- */
 public class KuesionerDPP extends Form {
 
     private KodeProv kodeProv;
@@ -112,7 +108,7 @@ public class KuesionerDPP extends Form {
         }
     }
     
-    public void cekDuplikasiGiani(){
+    public void cekDuplikasiObjek(){
         for (int i = 0; i < listPerusahaan.size(); i++) {
             if (i!=0){
                 if (listPerusahaan.get(i-1) == listPerusahaan.get(i))
@@ -158,19 +154,19 @@ public class KuesionerDPP extends Form {
 
     //        validasi faksimili
             if (listPerusahaan.get(j).getFaksimili().length() > 15) {
-                super.addErrorMessages("Nomor Faksimili Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Nomor Faksimili Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena lebih dari 15 karakter");
             }
 
     //        validasi no telp
             for (i = 0; i < listPerusahaan.get(j).getNoTelp().size(); i++) {
                 if (listPerusahaan.get(j).getNoTelp().get(i).length() > 15) {
-                    super.addErrorMessages("Nomor Telepon Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                    super.addErrorMessages("Nomor Telepon Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena lebih dari 15 karakter");
                 }
             }
 
     //        validasi bbhu
             if (this.listPerusahaan.get(j).getBbhu() < 1 || listPerusahaan.get(j).getBbhu() > 10) {
-                super.addErrorMessages("BBHU Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("BBHU Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode bbhu yang diinputkan tidak dalam rentang 1 s.d. 10");
             }
 
     //        validasi usaha utama
@@ -193,11 +189,11 @@ public class KuesionerDPP extends Form {
                 }
             }
             if (i == listKodeKab.size()) { // iterasi maksimum terpenuhi, berarti kode kabupaten tidak sesuai
-                super.addErrorMessages("Kode Kecamatan Perusahaan "+listPerusahaan.get(j).getNama()+" belum sesuai");
+                super.addErrorMessages("Kode Kabupaten Perusahaan "+listPerusahaan.get(j).getNama()+" Tidak Terdapat di Provinsi Tersebut");
             }
             i = 0;
 
-    //        validasi kode kecamatan apakah ada dalam kode kabpaten
+    //        validasi kode kecamatan apakah ada dalam kode kabupaten
             List<KodeKec> listKodeKec = listPerusahaan.get(j).getKodeWilayah().getKodeKab().getListKodeKec();
             KodeKec kodeKecCheck = listPerusahaan.get(j).getKodeWilayah().getKodeKec();
             for (i = 0; i < listKodeKec.size(); i++) {
@@ -206,7 +202,7 @@ public class KuesionerDPP extends Form {
                 }
             }
             if (i == listKodeKec.size()) {
-                super.addErrorMessages("Kode Kecamatan Perusahaan "+listPerusahaan.get(j).getNama()+" belum sesuai");
+                super.addErrorMessages("Kode Kecamatan Perusahaan "+listPerusahaan.get(j).getNama()+" Tidak Terdapat di Kabupaten tersebut");
             }
             i = 0;
 
@@ -222,23 +218,23 @@ public class KuesionerDPP extends Form {
 
     //        validasi Subsektor
             if (validasiNolSatu(listPerusahaan.get(j).getSubsektor().getHortikultura())) {
-                super.addErrorMessages("Status Hortikultura Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Status Hortikultura Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode status hortikultura yang diinputkan hanya boleh angka 0 atau 1");
             }
 
             if (validasiNolSatu(listPerusahaan.get(j).getSubsektor().getPerikanan())) {
-                super.addErrorMessages("Status Perikanan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Status Perikanan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode status perikanan yang diinputkan hanya boleh angka 0 atau 1");
             }
 
             if (validasiNolSatu(listPerusahaan.get(j).getSubsektor().getPeternakan())) {
-                super.addErrorMessages("Status Peternakan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Status Peternakan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode status peternakan yang diinputkan hanya boleh angka 0 atau 1");
             }
 
             if (validasiNolSatu(listPerusahaan.get(j).getSubsektor().getKehutanan())) {
-                super.addErrorMessages("Status Kehutanan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Status Kehutanan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode status kehutanan yang diinputkan hanya boleh angka 0 atau 1");
             }
 
             if (validasiNolSatu(listPerusahaan.get(j).getSubsektor().getTanamPangan())) {
-                super.addErrorMessages("Status Tanam Pangan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Status Tanam Pangan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode status tanaman pangan yang diinputkan hanya boleh angka 0 atau 1");
             }
 
             if (cekKonten(listPerusahaan.get(j).getSubsektor())) {
@@ -252,7 +248,7 @@ public class KuesionerDPP extends Form {
                 }
             }
             if (i == kumpulanKebun.length) {
-                super.addErrorMessages("Kode Perkebunan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar");
+                super.addErrorMessages("Kode Perkebunan Perusahaan "+listPerusahaan.get(j).getNama()+" belum benar karena kode status perkebunan yang diinputkan hanya boleh dalam rentang 3a s.d. 3k");
             }
             i = 0;
             
@@ -270,15 +266,17 @@ public class KuesionerDPP extends Form {
         else{
             List<String> errorMessages = this.getErrorMessages();
             
-            System.out.println("Input invalid. Fix errors below:");
+            System.out.println("Input tidak valid. Perbaiki kesalahan di bawah ini:");
+            int j = 1;
             for (String errorMessage : errorMessages) {
-                System.out.println("- "+ errorMessage);
+                System.out.println(j + ". "+ errorMessage);
+                j++;
             }
         }
     }
        
 
-    public int getTotalPerusahaan() {
-        return this.getListPerusahaan().size();
+    public void getTotalPerusahaan() {
+        System.out.println("Jumlah Perusahaan = " + getListPerusahaan().size());
     }
 }

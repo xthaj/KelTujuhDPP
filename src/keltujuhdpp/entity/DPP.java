@@ -1,9 +1,14 @@
+/*
+Kelompok 7
+222111930 Atha JR
+222111938 Azhari
+222111971 Cindy Septia Trionita
+222112085 Hamdani
+222112212 Muhammad Fauzan Azima. A
+*/
+
 package keltujuhdpp.entity;
 
-/**
- *
- * @author Asus
- */
 public class DPP {
 
     private int status;
@@ -64,6 +69,11 @@ public class DPP {
 
     @Override
     public String toString() {
-        return "DPP{" + "status= " + status + ", deskripsi Status= " + deskripsiStatus + ", kunjungan= " + kunjungan + ", deskripsi Kunjungan= " + deskripsiKunjungan + '}';
+        return "DPP {" + 
+                "\n\t\t  Status\t\t= " + status + 
+                "\n\t\t  Deskripsi Status\t= " + deskripsiStatus + 
+                "\n\t\t  Kunjungan\t\t= " + kunjungan + 
+                "\n\t\t  Deskripsi Kunjungan  = " + deskripsiKunjungan +
+                "}";
     }
 }

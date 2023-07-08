@@ -1,3 +1,12 @@
+/*
+Kelompok 7
+222111930 Atha JR
+222111938 Azhari
+222111971 Cindy Septia Trionita
+222112085 Hamdani
+222112212 Muhammad Fauzan Azima. A
+*/
+
 package keltujuhdpp;
 
 import java.util.List;
@@ -10,82 +19,51 @@ import keltujuhdpp.entity.Perusahaan;
 import keltujuhdpp.entity.Subsektor;
 import keltujuhdpp.form.KuesionerDPP;
 
-/**
- *
- * @author Kelompok Dua
- */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-    
-    
     public static void main(String[] args) {
         
+        KodeProv sumbar = new KodeProv();
+        sumbar.setKode("13");
+        sumbar.setNama("SUMATERA BARAT");
         
+        KodeKab pasaman = new KodeKab();
+        pasaman.setKode("09");
+        pasaman.setNama("PASAMAN");
+        sumbar.addKodeKab(pasaman);
+        KodeKec bonjol = new KodeKec("070", "BONJOL");
+        KodeKec lubuksikaping = new KodeKec("080", "LUBUK SIKAPING");
+        KodeKec duakoto = new KodeKec("100", "DUA KOTO");
+        KodeKec panti = new KodeKec("110", "PANTI");
+        KodeKec rao = new KodeKec("121", "RAO");
+
+        pasaman.addKodeKec(lubuksikaping);
+        pasaman.addKodeKec(duakoto);
+         pasaman.addKodeKec(panti);
+//        pasaman.addKodeKec(rao);
+        pasaman.addKodeKec(bonjol);
         
-//        INI BARU DEKLARASI WILAYAH
-        KodeProv papua = new KodeProv();
-        papua.setKode("94");
-        papua.setNama("PAPUA");
+//PENGISIAN KUESIONER
 
-        KodeKab deiyai = new KodeKab();
-        deiyai.setKode("36");
-        deiyai.setNama("DEIYAI");
+        KuesionerDPP kuesionerPasaman = new KuesionerDPP();
+        kuesionerPasaman.setKodeProv(sumbar);
+        kuesionerPasaman.setKodeKab(pasaman);
+        kuesionerPasaman.setPeriodeData(2022);
 
-        KodeKec kapiraya = new KodeKec("010", "KAPIRAYA");
-        KodeKec tigiBarat = new KodeKec("020", "TIGI BARAT");
-        KodeKec tigi = new KodeKec("030", "TIGI");
-        KodeKec tigiTimur = new KodeKec("040", "TIGI TIMUR");
-        KodeKec bowobado = new KodeKec("050", "BOWOBADO");
-
-        deiyai.addKodeKec(kapiraya);
-        deiyai.addKodeKec(tigiBarat);
-        deiyai.addKodeKec(tigi);
-        deiyai.addKodeKec(tigiTimur);
-        deiyai.addKodeKec(bowobado);
-
-        KodeKab yalimo = new KodeKab("32", "YALIMO");
-        KodeKec welarek = new KodeKec("010", "WELAREK");
-        KodeKec apalapsili = new KodeKec("020", "APALAPSILI");
-        KodeKec abenaho = new KodeKec("030", "ABNAHO");
-        KodeKec elelim = new KodeKec("040", "ELELIM");
-        KodeKec benawa = new KodeKec("050", "BENAWA");
-
-        yalimo.addKodeKec(welarek);
-        yalimo.addKodeKec(apalapsili);
-        yalimo.addKodeKec(abenaho);
-        yalimo.addKodeKec(elelim);
-        yalimo.addKodeKec(benawa);
-
-        papua.addKodeKab(deiyai);
-        papua.addKodeKab(yalimo);
-        
-        
-        
-        
-        
-//        INI MULAI MENGISI KUESIONER
-        KuesionerDPP kuesionerDeiyai = new KuesionerDPP();
-        kuesionerDeiyai.setKodeProv(papua);
-        kuesionerDeiyai.setKodeKab(deiyai);
-        kuesionerDeiyai.setPeriodeData(2022);
-
-//        Membuat perusahaan 1
+//PERUSAHAAN 1
         Perusahaan perusahaan1 = new Perusahaan();
-        KIP kip1 = new KIP(kuesionerDeiyai.getKodeProv(), kuesionerDeiyai.getKodeKab());
+        KIP kip1 = new KIP(kuesionerPasaman.getKodeProv(), kuesionerPasaman.getKodeKab());
 
-        kip1.setKodeKec(tigiTimur);
+        kip1.setKodeKec(rao);
         kip1.setKju("1");
         kip1.setNoUrut(1);
         
         perusahaan1.setKodeWilayah(kip1);
-        perusahaan1.setNama("MAKMUR SEJAHTERA HAYUUUK");
-        perusahaan1.setAlamat("Jalan Kenangan penuh luka");
-        perusahaan1.addNoTelp("(021) 350093");
-        perusahaan1.setFaksimili("(021) 3500990993");
-        perusahaan1.setBbhu(11);
+        perusahaan1.setNama("PERUSAHAAN NORMAL 1");
+        perusahaan1.setAlamat("Jalan Contoh 1");
+        perusahaan1.addNoTelp("02123456678");
+        perusahaan1.setFaksimili("02345673456");
+        perusahaan1.setBbhu(9);
 
         DPP dpp1 = new DPP();
         dpp1.setKunjungan(1);
@@ -104,27 +82,27 @@ public class Main {
         perusahaan1.setSubsektor(subsektor1);
         perusahaan1.setUsahaUtama("3c");
 
-        kuesionerDeiyai.addPerusahaan(perusahaan1);
+        kuesionerPasaman.addPerusahaan(perusahaan1);
         System.out.println(perusahaan1);
 
-//        Membuat perusahaan 2
+//PERUSAHAAN 2 
         Perusahaan perusahaan2 = new Perusahaan();
-        KIP kip2 = new KIP(kuesionerDeiyai.getKodeProv(), kuesionerDeiyai.getKodeKab());
+        KIP kip2 = new KIP(kuesionerPasaman.getKodeProv(), kuesionerPasaman.getKodeKab());
         
-        kip2.setKodeKec(tigiBarat);
+        kip2.setKodeKec(bonjol);
         kip2.setKju("2");
         kip2.setNoUrut(4);
 
         perusahaan2.setKodeWilayah(kip2);
-        perusahaan2.setNama("WAKWAW BAHAGIA SENTOSA");
-        perusahaan2.setAlamat("Jalan Kenangan penuh kebahagiaan bersamanya");
-        perusahaan2.addNoTelp("(021) 350093");
-        perusahaan2.setFaksimili("(021) 350093");
+        perusahaan2.setNama("PERUSAHAAN NORMAL 2");
+        perusahaan2.setAlamat("Jalan Contoh 2");
+        perusahaan2.addNoTelp("&223350093");
+        perusahaan2.setFaksimili("(021)67350093");
         perusahaan2.setBbhu(10);
 
         Subsektor subsektor2 = new Subsektor();
         subsektor2.setHortikultura(0);
-        subsektor2.setKehutanan(0);
+        subsektor2.setKehutanan(1);
         subsektor2.setKodePerkebunan("0");
         subsektor2.setPerikanan(0);
         subsektor2.setPeternakan(0);
@@ -134,34 +112,25 @@ public class Main {
         perusahaan2.setSubsektor(subsektor2);
         perusahaan2.setUsahaUtama("3d");
 
-        kuesionerDeiyai.addPerusahaan(perusahaan2);
+        kuesionerPasaman.addPerusahaan(perusahaan2);
         System.out.println(perusahaan2);
         
-//        Membuat perusahaan 3
-        Perusahaan perusahaan3 = new Perusahaan();
-
-        perusahaan3.setKodeWilayah(kip2);
-        perusahaan3.setNama("WAKWAW BAHAGIA SENTOSA");
-        perusahaan3.setAlamat("Jalan Kenangan penuh kebahagiaan bersamanya");
-        perusahaan3.addNoTelp("(021) 350093");
-        perusahaan3.setFaksimili("(021) 350093");
-        perusahaan3.setBbhu(10);
-
-        perusahaan3.setDpp(dpp1);
-        perusahaan3.setSubsektor(subsektor2);
-        perusahaan3.setUsahaUtama("3d");
-
-        kuesionerDeiyai.addPerusahaan(perusahaan3);
-        System.out.println(perusahaan3);
+        kuesionerPasaman.validate();
         
-        kuesionerDeiyai.validate();
-        kuesionerDeiyai.addPerusahaan(perusahaan2);
+//        System.out.println("Data diubah agar sesuai dengan peraturan");
         
-        System.out.println(kuesionerDeiyai.getTotalPerusahaan());
-        
-        kuesionerDeiyai.cekDuplikasi();
-        kuesionerDeiyai.cekDuplikasiGiani();
+//        ??
+//        perusahaan1.setBbhu(5);
+//        System.out.println(perusahaan1);
+//        kuesionerPasaman.validate();
 
+//        pasaman.addKodeKec(bonjol);
+//        kuesionerPasaman.validate();
+        
+
+        kuesionerPasaman.getTotalPerusahaan();
+        
+        kuesionerPasaman.cekDuplikasi();
     }
 
 }
