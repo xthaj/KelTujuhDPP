@@ -123,12 +123,6 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="42" pref="42" max="-2" attributes="0"/>
-                              <Component id="handphoneLabel" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                              <Component id="handphoneTextField" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="42" pref="42" max="-2" attributes="0"/>
                               <Component id="emailLabel" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                               <Component id="emailTextField" min="-2" pref="200" max="-2" attributes="0"/>
@@ -225,15 +219,7 @@
                           <Component id="emailLabel" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="emailTextField" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                              <Component id="handphoneLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="handphoneTextField" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -317,18 +303,6 @@
                 <Property name="text" type="java.lang.String" value="Email"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="handphoneLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="12" style="1"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="7" green="58" red="e5" type="rgb"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="No Handphone"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="idLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -338,7 +312,7 @@
                   <Color blue="7" green="58" red="e5" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="ID (Nomor Pegawai)"/>
+                <Property name="text" type="java.lang.String" value="NIK Pegawai"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="idTextField">
@@ -360,11 +334,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="confirmpasswordTextField">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&#xa;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="handphoneTextField">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#xa;"/>
               </Properties>
