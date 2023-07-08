@@ -190,14 +190,6 @@ class KuesionerDPP {
 + validate(): void
 }
 
-KuesionerDPP --|> Form
-KuesionerDPP *-- Perusahaan
-Perusahaan *-- DPP
-Perusahaan *-- KIP
-Perusahaan *-- KodeProv
-Perusahaan *-- KodeKab
-Perusahaan *-- KodeKec
-Perusahaan *-- Subsektor
-
+KuesionerDPP <|-- Form
 
 @enduml
