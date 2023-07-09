@@ -41,16 +41,45 @@ public class DatabaseTest {
     @Test
     public void testLogin() throws Exception {
         System.out.println("login");
-        User user = new User("12345", "123", false);
+        User user = new User("123", "123", true);
         Database instance = Database.getInstance(); 
         Map<String, Boolean> expResult = new HashMap<>();
-        expResult.put("isLoggedIn", false);
+        expResult.put("isLoggedIn", true);
         expResult.put("isAdmin", false);
         
         Map<String, Boolean> result = instance.login(user);
         
-        
         assertEquals(expResult, result);
     }
+    
+    @Test
+    public void testSignUp() throws Exception {
+        System.out.println("signUp");
+
+        // Create a test user
+        User user = new User("12345", "John Doe", "password", "johndoe@example.com", false);
+
+        // Get the instance of the Database class
+        Database instance = Database.getInstance();
+
+        // Call the signUp method
+        int statusCode = instance.signUp(user);
+
+        // Perform assertions based on the returned status code
+        switch (statusCode) {
+            case 0:
+                fail("Sign-up failed");
+                break;
+            case 1:
+                fail("Nik already exists");
+                break;
+            case 2:
+                System.out.println("Sign-up successful");
+                break;
+        }
+}
+
+    
+    
     
 }

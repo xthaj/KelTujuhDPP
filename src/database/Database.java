@@ -68,6 +68,47 @@ public class Database {
             throw ex;
         }
     }
+    
+    public int signUp(User user) throws SQLException {
+        Connection conn = getConnection();
+        try {
+            // Check if the nik already exists in the database
+            String checkQuery = "SELECT COUNT(*) AS count FROM user WHERE nik = ?";
+            PreparedStatement checkStatement = conn.prepareStatement(checkQuery);
+            checkStatement.setString(1, user.getNik());
+            ResultSet checkResult = checkStatement.executeQuery();
+            checkResult.next();
+            int count = checkResult.getInt("count");
+            checkResult.close();
+            checkStatement.close();
+
+            if (count > 0) {
+                // Nik already exists
+                return 1;
+            }
+
+            // Insert the new user into the database
+            String insertQuery = "INSERT INTO user (nik, nama, pw, email, is_admin) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement insertStatement = conn.prepareStatement(insertQuery);
+            insertStatement.setString(1, user.getNik());
+            insertStatement.setString(2, user.getNama());
+            insertStatement.setString(3, user.getPw());
+            insertStatement.setString(4, user.getEmail());
+            insertStatement.setBoolean(5, user.getIs_admin());
+            insertStatement.executeUpdate();
+            insertStatement.close();
+
+            // Sign-up successful
+            return 2;
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            conn.close();
+        }
+    }
+
+    
+    
 
     
 }
