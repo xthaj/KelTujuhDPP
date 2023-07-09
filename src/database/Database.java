@@ -106,6 +106,37 @@ public class Database {
             conn.close();
         }
     }
+    
+    public User getUserByNik(String nik) throws SQLException {
+        Connection conn = getConnection();
+        try {
+            // Prepare and execute the query
+            String query = "SELECT * FROM user WHERE nik = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, nik);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Extract user information from the result set
+                String nama = resultSet.getString("nama");
+                String pw = resultSet.getString("pw");
+                String email = resultSet.getString("email");
+                boolean is_admin = resultSet.getBoolean("is_admin");
+
+                // Create a User object
+                User user = new User(nik, nama, pw, email, is_admin);
+
+                return user;
+            } else {
+                // User not found
+                return null;
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            conn.close();
+        }
+    }
 
     
     

@@ -239,14 +239,29 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="handphoneLabel" linkSize="1" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                      <Component id="emailLabel" linkSize="1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="passwordLabel" linkSize="1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="usernameLabel" linkSize="1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="idLabel" linkSize="1" alignment="0" min="-2" pref="275" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="emailLabel" linkSize="1" min="-2" pref="120" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="emailUser" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="passwordLabel" linkSize="1" min="-2" pref="120" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="passwordUser" min="-2" pref="120" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="idLabel" linkSize="1" min="-2" pref="275" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="nikUser" min="-2" pref="275" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="usernameLabel1" min="-2" pref="120" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="namaUser" linkSize="1" min="-2" pref="120" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="722" max="32767" attributes="0"/>
+                  <EmptySpace pref="441" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -254,16 +269,26 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="183" max="-2" attributes="0"/>
-                  <Component id="idLabel" linkSize="2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="usernameLabel" linkSize="2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="passwordLabel" linkSize="2" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="idLabel" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nikUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="usernameLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="namaUser" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="emailLabel" linkSize="2" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="handphoneLabel" linkSize="2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="427" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="passwordLabel" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="passwordUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="emailLabel" linkSize="2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="emailUser" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="475" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -278,10 +303,10 @@
               <Color blue="7" green="58" red="e5" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="ID (Nomor Pegawai)"/>
+            <Property name="text" type="java.lang.String" value="NIK"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="usernameLabel">
+        <Component class="javax.swing.JLabel" name="namaUser">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="1"/>
@@ -290,7 +315,7 @@
               <Color blue="7" green="58" red="e5" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Username"/>
+            <Property name="text" type="java.lang.String" value="Nama"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="passwordLabel">
@@ -317,7 +342,7 @@
             <Property name="text" type="java.lang.String" value="Email"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="handphoneLabel">
+        <Component class="javax.swing.JLabel" name="nikUser">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="1"/>
@@ -326,7 +351,43 @@
               <Color blue="7" green="58" red="e5" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="No Handphone"/>
+            <Property name="text" type="java.lang.String" value="NIK"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="usernameLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="7" green="58" red="e5" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="Nama"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="passwordUser">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="7" green="58" red="e5" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="Password"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="emailUser">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="7" green="58" red="e5" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="Email"/>
           </Properties>
         </Component>
       </SubComponents>

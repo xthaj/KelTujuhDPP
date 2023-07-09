@@ -77,7 +77,29 @@ public class DatabaseTest {
                 System.out.println("Sign-up successful");
                 break;
         }
-}
+    }
+    
+    @Test
+    public void testGetUser() throws Exception {
+        System.out.println("getUser");
+
+        // Create a sample user
+        User user = new User("666", "John Doe", "password123", "john@example.com", false);
+
+        // Insert the user into the database
+        Database.getInstance().signUp(user);
+
+        // Retrieve the user from the database by nik
+        User retrievedUser = Database.getInstance().getUserByNik(user.getNik());
+
+        // Verify that the retrieved user matches the original user
+        assertEquals(user.getNik(), retrievedUser.getNik());
+        assertEquals(user.getNama(), retrievedUser.getNama());
+        assertEquals(user.getPw(), retrievedUser.getPw());
+        assertEquals(user.getEmail(), retrievedUser.getEmail());
+        assertEquals(user.getIs_admin(), retrievedUser.getIs_admin());
+    }
+
 
     
     

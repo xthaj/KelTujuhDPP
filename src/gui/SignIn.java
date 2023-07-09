@@ -5,6 +5,8 @@
 package gui;
 
 import database.Database;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.swing.JFrame;
@@ -23,6 +25,11 @@ public class SignIn extends javax.swing.JFrame {
     public SignIn() {
         initComponents();
          this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    public void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
 
     /**
@@ -45,7 +52,7 @@ public class SignIn extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(236, 248, 249));
@@ -200,9 +207,6 @@ public class SignIn extends javax.swing.JFrame {
         User user = new User();
         user.setNik(nikTextField.getText());
         user.setPw(passwordTextField.getText());
-
-        System.out.println(user.getNik());
-        System.out.println(user.getPw());
         
         try {
             Map<String, Boolean> loginResult = Database.getInstance().login(user);
@@ -212,10 +216,12 @@ public class SignIn extends javax.swing.JFrame {
             if (isLoggedIn) {
                 if (isAdmin) {
                 JOptionPane.showMessageDialog(this, "Berhasil Login sebagai Admin!");
-                // Perform admin-related actions
+                close();
+                AdminDashboard.openAdminDashboard(user.getNik());
             } else {
                 JOptionPane.showMessageDialog(this, "Berhasil Login sebagai User!");
-                // Perform regular user actions
+                close();
+                PegawaiDashboard.openPegawaiDashboard(user.getNik());
             }
             } else {
                 // Invalid username or password
