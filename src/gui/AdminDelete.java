@@ -4,17 +4,39 @@
  */
 package gui;
 
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author hamda
  */
 public class AdminDelete extends javax.swing.JFrame {
-
+    private Connection conn;
+//    private DefaultTableModel model;
+    private PreparedStatement pstmt;
+    private Statement stat;
+    private ResultSet rs;
+    DefaultTableModel model;
+    
     /**
      * Creates new form ProfileAdmin
      */
     public AdminDelete() {
+        
         initComponents();
+        conn=connection.getConnection();
+        System.out.println("ini masuk admin view");
+        getProvinsi();
+        viewTable();
+        
     }
 
     /**
@@ -27,52 +49,40 @@ public class AdminDelete extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        TahunLabel = new javax.swing.JLabel();
-        ProvinsiLabel = new javax.swing.JLabel();
-        KabKotaLabel = new javax.swing.JLabel();
-        KecamatanLabel = new javax.swing.JLabel();
-        KodeKJULabel = new javax.swing.JLabel();
-        KodeKJUTextField = new javax.swing.JTextField();
-        KecamatanComboBox = new javax.swing.JComboBox<>();
-        KabKotaComboBox = new javax.swing.JComboBox<>();
-        ProvinsiComboBox = new javax.swing.JComboBox<>();
-        TahunTextField = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        filterButton = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        perusahaanTable = new javax.swing.JTable();
+        hapus = new javax.swing.JButton();
+        t_cari = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        provinsiComboBox = new javax.swing.JComboBox<>();
+        kabKotComboBox = new javax.swing.JComboBox<>();
+        resetButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(6, 141, 169));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(229, 88, 7));
-        jButton1.setText("LOGOUT");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 740, 189, 40));
-
         jPanel3.setBackground(new java.awt.Color(229, 88, 7));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("DASHBOARD");
+        jLabel3.setText("DASBOARD");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -81,7 +91,7 @@ public class AdminDelete extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel3)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,34 +102,6 @@ public class AdminDelete extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 329, -1));
-
-        jPanel4.setBackground(new java.awt.Color(229, 88, 7));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("PROFILE");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
-        );
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 329, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo BPS 200.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(229, 88, 7));
 
@@ -146,36 +128,11 @@ public class AdminDelete extends javax.swing.JFrame {
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 329, -1));
 
-        jPanel6.setBackground(new java.awt.Color(229, 88, 7));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("UPDATE");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel5)
-                .addContainerGap(205, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addContainerGap())
-        );
-
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 329, -1));
-
         jPanel7.setBackground(new java.awt.Color(229, 88, 7));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("VIEW");
+        jLabel8.setText("PROFILE");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -184,7 +141,7 @@ public class AdminDelete extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel8)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,13 +151,13 @@ public class AdminDelete extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 329, -1));
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 329, -1));
 
         jPanel9.setBackground(new java.awt.Color(126, 23, 23));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("DELETE");
+        jLabel16.setText("VIEW");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -209,7 +166,7 @@ public class AdminDelete extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel16)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,136 +176,204 @@ public class AdminDelete extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 329, -1));
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 329, -1));
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(229, 88, 7));
+        jButton1.setText("LOGOUT");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 740, 189, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel10.setBackground(new java.awt.Color(6, 181, 214));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Provinsi");
 
-        TahunLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        TahunLabel.setText("Tahun");
-
-        ProvinsiLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ProvinsiLabel.setText("Provinsi");
-
-        KabKotaLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        KabKotaLabel.setText("Kab/Kota");
-
-        KecamatanLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        KecamatanLabel.setText("Kecamatan");
-
-        KodeKJULabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        KodeKJULabel.setText("Kode KJU");
-
-        KecamatanComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        KabKotaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        ProvinsiComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", " " }));
-
-        TahunTextField.setForeground(new java.awt.Color(204, 204, 204));
-        TahunTextField.addActionListener(new java.awt.event.ActionListener() {
+        filterButton.setText("Set Filter");
+        filterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TahunTextFieldActionPerformed(evt);
+                filterButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Delete");
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setText("Kab/Kota");
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(KecamatanLabel)
-                            .addComponent(TahunLabel)
-                            .addComponent(ProvinsiLabel)
-                            .addComponent(KabKotaLabel)
-                            .addComponent(KodeKJULabel))
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(KecamatanComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ProvinsiComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(KabKotaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(TahunTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(KodeKJUTextField))))
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TahunLabel)
-                    .addComponent(TahunTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ProvinsiComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ProvinsiLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(KabKotaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(KabKotaLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(KecamatanComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(KecamatanLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KodeKJUTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(KodeKJULabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(26, 26, 26))
-        );
+        perusahaanTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "<html> Kode <br> Prov. </html>", "<html> Kode <br> Kab. </html>", "<html> Kode <br> Kec. </html>", "<html> Kode <br> KJU </html>", "<html>     No. <br>      Urut <br>     dalam <br>     satu <br>     Kab/ <br>     Kota  </html>", "<html>     Nama <br>     Perusahaan <br>     Pertanian </html>", "<html>     Alamat <br>     Perusahaan <br>     Pertanian </html>", "<html>     No <br>     Telepon </html>", "<html>     No <br>     Faksimili <br> </html>", "<html>     Bentuk <br>     Badan <br>     Hukum </html>", "<html>Konfirmasi<br>Kunjungan</html>", "<html>Status<br>Perusahaan</html>", "<html>Tanaman<br>Pangan</html>", "<html>Hortikultura</html>", "<html>Perkebunan</html>", "Peternakan", "Kehutanan", "Perikanan", "<html>Jenis<br>Usaha<br>Utama</html>"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        perusahaanTable.getTableHeader().setReorderingAllowed(false);
+        perusahaanTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                perusahaanTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(perusahaanTable);
+        if (perusahaanTable.getColumnModel().getColumnCount() > 0) {
+            perusahaanTable.getColumnModel().getColumn(0).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(1).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(2).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(3).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(4).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(5).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(6).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(7).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(8).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(9).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(10).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(11).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(12).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(13).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(14).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(15).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(16).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(17).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(18).setResizable(false);
+            perusahaanTable.getColumnModel().getColumn(19).setResizable(false);
+        }
+
+        hapus.setText("hapus");
+        hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusActionPerformed(evt);
+            }
+        });
+
+        t_cari.setForeground(new java.awt.Color(0, 0, 102));
+        t_cari.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        t_cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        t_cari.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_cariMouseClicked(evt);
+            }
+        });
+        t_cari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_cariActionPerformed(evt);
+            }
+        });
+        t_cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                t_cariKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                t_cariKeyTyped(evt);
+            }
+        });
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cari.jpg"))); // NOI18N
+
+        provinsiComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
+        provinsiComboBox.setSelectedIndex(-1);
+        provinsiComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                provinsiComboBoxActionPerformed(evt);
+            }
+        });
+
+        kabKotComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kabKotComboBoxActionPerformed(evt);
+            }
+        });
+
+        resetButton.setText("Reset Filter");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(316, 316, 316)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(filterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 967, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(919, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(kabKotComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(provinsiComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(119, 119, 119)
+                        .addComponent(t_cari, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(provinsiComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(t_cari, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(kabKotComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterButton)
+                    .addComponent(resetButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hapus)
+                .addContainerGap(265, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(229, 88, 7));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("ADMIN - DELETE");
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("ADMIN - DELETE");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(jLabel6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(340, 340, 340)
+                .addComponent(jLabel7)
+                .addContainerGap(1173, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -365,20 +390,487 @@ public class AdminDelete extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TahunTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TahunTextFieldActionPerformed
+    private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
+    String selectedProvinsi = (String) provinsiComboBox.getSelectedItem();
+    String selectedKabKot = (String) kabKotComboBox.getSelectedItem();
+
+    // Check if both province and kabupaten/kota are selected
+    if (selectedProvinsi != null && selectedKabKot != null) {
+        // Apply the filtering logic
+        String selectedProvinsiCode = selectedProvinsi.substring(0, 2) + "%";
+        String selectedKabKotCode = selectedKabKot.split(" - ")[0] + "%";
+
+        try {
+            // Construct the filtering query
+            String query = "SELECT * FROM perusahaan WHERE provinsi LIKE ? AND kab_kot LIKE ?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, selectedProvinsiCode);
+            pstmt.setString(2, selectedKabKotCode);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Create a new table model for the filtered data
+            DefaultTableModel filteredTableModel = new DefaultTableModel();
+            filteredTableModel.addColumn("ID"); // Add the hidden column "ID"
+            filteredTableModel.addColumn("No");
+            filteredTableModel.addColumn("Kode Prov");
+            filteredTableModel.addColumn("Kode Kab");
+            filteredTableModel.addColumn("Kode Kec");
+            filteredTableModel.addColumn("Kode KJU");
+            filteredTableModel.addColumn("No. Urut dalam satu kab/kot");
+            filteredTableModel.addColumn("Nama Perusahaan");
+            filteredTableModel.addColumn("Alamat Perusahaan");
+            filteredTableModel.addColumn("No. Telp");
+            filteredTableModel.addColumn("No. Faks");
+            filteredTableModel.addColumn("Bentuk Badan Hukum");
+            filteredTableModel.addColumn("Konfirmasi Kunjungan");
+            filteredTableModel.addColumn("Status Perusahaan");
+            filteredTableModel.addColumn("Tanaman Pangan");
+            filteredTableModel.addColumn("Holtikultura");
+            filteredTableModel.addColumn("Perkebunan");
+            filteredTableModel.addColumn("Peternakan");
+            filteredTableModel.addColumn("Kehutanan");
+            filteredTableModel.addColumn("Perikanan");
+            filteredTableModel.addColumn("Jenis Usaha Utama");
+
+            int i = 1;
+            while (rs.next()) {
+                filteredTableModel.addRow(new Object[]{
+                    rs.getString("id"), // Add the ID value to the hidden column
+                    i,
+                    rs.getString("provinsi"),
+                    rs.getString("kab_kot"),
+                    rs.getString("kec"),
+                    rs.getString("kode_kju"),
+                    rs.getString("no_urut"),
+                    rs.getString("nama"),
+                    rs.getString("alamat"),
+                    rs.getString("no_telp"),
+                    rs.getString("no_fak"),
+                    rs.getString("badan_hukum"),
+                    rs.getString("sudah_dikunjungi"),
+                    rs.getString("status"),
+                    rs.getString("ada_tanaman_pangan"),
+                    rs.getString("ada_hortikultura"),
+                    rs.getString("perkebunan"),
+                    rs.getString("ada_peternakan"),
+                    rs.getString("ada_kehutanan"),
+                    rs.getString("ada_perikanan"),
+                    rs.getString("jenis_usaha")
+                });
+                i++;
+            }
+
+            // Hide the "ID" column
+            TableColumnModel columnModel = perusahaanTable.getColumnModel();
+            TableColumn idColumn = columnModel.getColumn(0);
+            columnModel.removeColumn(idColumn);
+
+            // Set the filtered table model to perusahaanTable
+            perusahaanTable.setModel(filteredTableModel);
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        }  else if (selectedProvinsi != null && selectedKabKot == null) {
+        // Apply the filtering logicselectedKabKot != null)
+        String selectedProvinsiCode = selectedProvinsi.substring(0, 2) + "%";
+
+        try {
+            // Construct the filtering query
+            String query = "SELECT * FROM perusahaan WHERE provinsi LIKE ?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, selectedProvinsiCode);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Create a new table model for the filtered data
+            DefaultTableModel filteredTableModel = new DefaultTableModel();
+            filteredTableModel.addColumn("ID"); // Add the hidden column "ID"
+            filteredTableModel.addColumn("No");
+            filteredTableModel.addColumn("Kode Prov");
+            filteredTableModel.addColumn("Kode Kab");
+            filteredTableModel.addColumn("Kode Kec");
+            filteredTableModel.addColumn("Kode KJU");
+            filteredTableModel.addColumn("No. Urut dalam satu kab/kot");
+            filteredTableModel.addColumn("Nama Perusahaan");
+            filteredTableModel.addColumn("Alamat Perusahaan");
+            filteredTableModel.addColumn("No. Telp");
+            filteredTableModel.addColumn("No. Faks");
+            filteredTableModel.addColumn("Bentuk Badan Hukum");
+            filteredTableModel.addColumn("Konfirmasi Kunjungan");
+            filteredTableModel.addColumn("Status Perusahaan");
+            filteredTableModel.addColumn("Tanaman Pangan");
+            filteredTableModel.addColumn("Holtikultura");
+            filteredTableModel.addColumn("Perkebunan");
+            filteredTableModel.addColumn("Peternakan");
+            filteredTableModel.addColumn("Kehutanan");
+            filteredTableModel.addColumn("Perikanan");
+            filteredTableModel.addColumn("Jenis Usaha Utama");
+
+            int i = 1;
+            while (rs.next()) {
+                filteredTableModel.addRow(new Object[]{
+                    rs.getString("id"), // Add the ID value to the hidden column
+                    i,
+                    rs.getString("provinsi"),
+                    rs.getString("kab_kot"),
+                    rs.getString("kec"),
+                    rs.getString("kode_kju"),
+                    rs.getString("no_urut"),
+                    rs.getString("nama"),
+                    rs.getString("alamat"),
+                    rs.getString("no_telp"),
+                    rs.getString("no_fak"),
+                    rs.getString("badan_hukum"),
+                    rs.getString("sudah_dikunjungi"),
+                    rs.getString("status"),
+                    rs.getString("ada_tanaman_pangan"),
+                    rs.getString("ada_hortikultura"),
+                    rs.getString("perkebunan"),
+                    rs.getString("ada_peternakan"),
+                    rs.getString("ada_kehutanan"),
+                    rs.getString("ada_perikanan"),
+                    rs.getString("jenis_usaha")
+                });
+                i++;
+            }
+
+            // Hide the "ID" column
+            TableColumnModel columnModel = perusahaanTable.getColumnModel();
+            TableColumn idColumn = columnModel.getColumn(0);
+            columnModel.removeColumn(idColumn);
+
+            // Set the filtered table model to perusahaanTable
+            perusahaanTable.setModel(filteredTableModel);
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    }//GEN-LAST:event_filterButtonActionPerformed
+
+    private void perusahaanTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_perusahaanTableMouseClicked
+     
+    }//GEN-LAST:event_perusahaanTableMouseClicked
+
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+         // TODO add your handling code here:
+        int selectedRow = perusahaanTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String id_pertanyaan = perusahaanTable.getValueAt(selectedRow,0).toString();
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin Menghapus Data Ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION){
+                try{
+                    String dbUrl = "jdbc:mysql://localhost:3306/pbo";
+                    String username = "root";
+                    String password = "";
+                    Connection conn = DriverManager.getConnection(dbUrl,username,password);
+
+                    DefaultTableModel dtm = (DefaultTableModel)perusahaanTable.getModel();
+                    String existId = dtm.getValueAt(perusahaanTable.getSelectedRow(),0).toString();
+
+                    //Prepared Statement
+                    String sql = "DELETE FROM perusahaan WHERE id = ?";
+
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setString(1,existId);
+
+                    stmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(this,"Sukses Deleting");
+
+                    //refresh table
+                    while(dtm.getRowCount()>0){
+                        dtm.removeRow(0);
+                    }
+
+                    viewTable();
+
+                    conn.close();
+                }
+                catch(SQLException e){
+                    System.out.println(e);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_hapusActionPerformed
+
+    private void t_cariMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_cariMouseClicked
+        t_cari.setText("");
+    }//GEN-LAST:event_t_cariMouseClicked
+
+    private void t_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_cariActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TahunTextFieldActionPerformed
+    }//GEN-LAST:event_t_cariActionPerformed
+
+    private void t_cariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_cariKeyReleased
+
+        String searchString = t_cari.getText();
+        search(searchString);
+    }//GEN-LAST:event_t_cariKeyReleased
+
+   public void search(String str) {
+    model = (DefaultTableModel) perusahaanTable.getModel();
+    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+    perusahaanTable.setRowSorter(trs);
+
+    // Case-insensitive search
+    RowFilter<DefaultTableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + str);
+    trs.setRowFilter(rowFilter);
+    }
+    
+    private void t_cariKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_cariKeyTyped
+
+    }//GEN-LAST:event_t_cariKeyTyped
+
+    private void provinsiComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinsiComboBoxActionPerformed
+        
+        getKabKot();
+        kabKotComboBox.setSelectedIndex(-1);
+    }//GEN-LAST:event_provinsiComboBoxActionPerformed
+
+    private void kabKotComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kabKotComboBoxActionPerformed
+
+    }//GEN-LAST:event_kabKotComboBoxActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        clearForm();
+        String selectedProvinsi = (String) provinsiComboBox.getSelectedItem();
+    String selectedKabKot = (String) kabKotComboBox.getSelectedItem();
+
+    // Check if both province and kabupaten/kota are selected
+
+        try {
+            // Construct the filtering query
+            String query = "SELECT * FROM perusahaan";
+            pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Create a new table model for the filtered data
+            DefaultTableModel filteredTableModel = new DefaultTableModel();
+            filteredTableModel.addColumn("ID"); // Add the hidden column "ID"
+            filteredTableModel.addColumn("No");
+            filteredTableModel.addColumn("Kode Prov");
+            filteredTableModel.addColumn("Kode Kab");
+            filteredTableModel.addColumn("Kode Kec");
+            filteredTableModel.addColumn("Kode KJU");
+            filteredTableModel.addColumn("No. Urut dalam satu kab/kot");
+            filteredTableModel.addColumn("Nama Perusahaan");
+            filteredTableModel.addColumn("Alamat Perusahaan");
+            filteredTableModel.addColumn("No. Telp");
+            filteredTableModel.addColumn("No. Faks");
+            filteredTableModel.addColumn("Bentuk Badan Hukum");
+            filteredTableModel.addColumn("Konfirmasi Kunjungan");
+            filteredTableModel.addColumn("Status Perusahaan");
+            filteredTableModel.addColumn("Tanaman Pangan");
+            filteredTableModel.addColumn("Holtikultura");
+            filteredTableModel.addColumn("Perkebunan");
+            filteredTableModel.addColumn("Peternakan");
+            filteredTableModel.addColumn("Kehutanan");
+            filteredTableModel.addColumn("Perikanan");
+            filteredTableModel.addColumn("Jenis Usaha Utama");
+
+            int i = 1;
+            while (rs.next()) {
+                filteredTableModel.addRow(new Object[]{
+                    rs.getString("id"), // Add the ID value to the hidden column
+                    i,
+                    rs.getString("provinsi"),
+                    rs.getString("kab_kot"),
+                    rs.getString("kec"),
+                    rs.getString("kode_kju"),
+                    rs.getString("no_urut"),
+                    rs.getString("nama"),
+                    rs.getString("alamat"),
+                    rs.getString("no_telp"),
+                    rs.getString("no_fak"),
+                    rs.getString("badan_hukum"),
+                    rs.getString("sudah_dikunjungi"),
+                    rs.getString("status"),
+                    rs.getString("ada_tanaman_pangan"),
+                    rs.getString("ada_hortikultura"),
+                    rs.getString("perkebunan"),
+                    rs.getString("ada_peternakan"),
+                    rs.getString("ada_kehutanan"),
+                    rs.getString("ada_perikanan"),
+                    rs.getString("jenis_usaha")
+                });
+                i++;
+            }
+
+            // Hide the "ID" column
+            TableColumnModel columnModel = perusahaanTable.getColumnModel();
+            TableColumn idColumn = columnModel.getColumn(0);
+            columnModel.removeColumn(idColumn);
+
+            // Set the filtered table model to perusahaanTable
+            perusahaanTable.setModel(filteredTableModel);
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void clearForm(){
+        provinsiComboBox.setSelectedIndex(-1);
+        kabKotComboBox.setSelectedIndex(-1);
+    }
+    
+    
+     private void getKabKot() {
+        // Mendapatkan provinsi yang dipilih
+        if(provinsiComboBox.getSelectedItem()!=null){
+        String selectedItem = (String) provinsiComboBox.getSelectedItem();
+        String selectedProvinsi = selectedItem.substring(0, 2) + "%";
+
+
+        // Menghapus item sebelumnya dari JComboBox kabupaten
+        kabKotComboBox.removeAllItems();
+
+        // Mengambil data kabupaten/kota berdasarkan provinsi yang dipilih
+        try {
+            String myQuery = "SELECT nama_dagri, kode_bps FROM m_kabupaten WHERE kode_bps LIKE ?";
+            pstmt = conn.prepareStatement(myQuery);
+            pstmt.setString(1, selectedProvinsi);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Menambahkan data kabupaten/kota ke dalam JComboBox kabupaten
+            while (rs.next()) {
+                String namaKabupaten = rs.getString("nama_dagri");
+                String kodeKabupaten = rs.getString("kode_bps");
+                kabKotComboBox.addItem(kodeKabupaten + " - " + namaKabupaten);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        }
+    }
+
+
+    
+    private void getProvinsi() {
+    try {
+        String myQuery = "SELECT * FROM m_provinsi ORDER BY nama_bps";
+        pstmt = conn.prepareStatement(myQuery);
+        ResultSet rs = pstmt.executeQuery();
+
+        ArrayList<String> provinsiList = new ArrayList<>();
+        while (rs.next()) {
+            String kodeProv = rs.getString("kode_bps");
+            String namaProvinsi = rs.getString("nama_bps");
+            provinsiList.add(kodeProv + " - " + namaProvinsi);
+        }
+
+        // Mengganti model JComboBox provinsiComboBox dengan data provinsi yang baru
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(provinsiList.toArray(new String[0]));
+        provinsiComboBox.setModel(comboBoxModel);
+        provinsiComboBox.setSelectedIndex(-1);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Menutup semua objek JDBC
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+ 
+private void viewTable() {
+    DefaultTableModel tb = new DefaultTableModel();
+  
+    tb.addColumn("ID"); // Add the hidden column "ID"
+    tb.addColumn("No");
+    tb.addColumn("Kode Prov");
+    tb.addColumn("Kode Kab");
+    tb.addColumn("Kode Kec");
+    tb.addColumn("Kode KJU");
+    tb.addColumn("No. Urut dalam satu kab/kot");
+    tb.addColumn("Nama Perusahaan");
+    tb.addColumn("Alamat Perusahaan");
+    tb.addColumn("No. Telp");
+    tb.addColumn("No. Faks");
+    tb.addColumn("Bentuk Badan Hukum");
+    tb.addColumn("Konfirmasi Kunjungan");
+    tb.addColumn("Status Perusahaan");
+    tb.addColumn("Tanaman Pangan");
+    tb.addColumn("Holtikultura");
+    tb.addColumn("Perkebunan");
+    tb.addColumn("Peternakan");
+    tb.addColumn("Kehutanan");
+    tb.addColumn("Perikanan");
+    tb.addColumn("Jenis Usaha Utama");
+    perusahaanTable.setModel(tb);
+
+    try {
+        // Mengambil data dari database
+        Statement stat = conn.createStatement();
+        ResultSet rs = stat.executeQuery("SELECT * FROM perusahaan");
+        int i = 1;
+        while (rs.next()) {
+            tb.addRow(new Object[]{
+                rs.getString("id"), // Add the ID value to the hidden column
+                i,
+                rs.getString("provinsi"),
+                rs.getString("kab_kot"),
+                rs.getString("kec"),
+                rs.getString("kode_kju"),
+                rs.getString("no_urut"),
+                rs.getString("nama"),
+                rs.getString("alamat"),
+                rs.getString("no_telp"),
+                rs.getString("no_fak"),
+                rs.getString("badan_hukum"),
+                rs.getString("sudah_dikunjungi"),
+                rs.getString("status"),
+                rs.getString("ada_tanaman_pangan"),
+                rs.getString("ada_hortikultura"),
+                rs.getString("perkebunan"),
+                rs.getString("ada_peternakan"),
+                rs.getString("ada_kehutanan"),
+                rs.getString("ada_perikanan"),
+                rs.getString("jenis_usaha")
+            });
+            i++;
+        }
+
+        // Hide the "ID" column
+        TableColumnModel columnModel = perusahaanTable.getColumnModel();
+        TableColumn idColumn = columnModel.getColumn(0);
+        columnModel.removeColumn(idColumn);
+        
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
 
     /**
      * @param args the command line arguments
@@ -431,35 +923,29 @@ public class AdminDelete extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> KabKotaComboBox;
-    private javax.swing.JLabel KabKotaLabel;
-    private javax.swing.JComboBox<String> KecamatanComboBox;
-    private javax.swing.JLabel KecamatanLabel;
-    private javax.swing.JLabel KodeKJULabel;
-    private javax.swing.JTextField KodeKJUTextField;
-    private javax.swing.JComboBox<String> ProvinsiComboBox;
-    private javax.swing.JLabel ProvinsiLabel;
-    private javax.swing.JLabel TahunLabel;
-    private javax.swing.JTextField TahunTextField;
+    private javax.swing.JButton filterButton;
+    private javax.swing.JButton hapus;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> kabKotComboBox;
+    private javax.swing.JTable perusahaanTable;
+    private javax.swing.JComboBox<String> provinsiComboBox;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JTextField t_cari;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,8 +4,36 @@
  */
 package gui;
 
+import com.mysql.cj.result.Row;
+//import java.awt.Desktop;
+//import java.io.*;
 import java.sql.*;
+//import javax.swing.*;
+//import javax.swing.table.DefaultTableModel;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.Sheet;
+//import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import java.sql.*;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Desktop;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -17,6 +45,7 @@ public class AdminView extends javax.swing.JFrame {
     private PreparedStatement pstmt;
     private Statement stat;
     private ResultSet rs;
+    private String id;
     /**
      * Creates new form ProfileAdmin
      */
@@ -58,8 +87,9 @@ public class AdminView extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         perusahaanTable = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        exportCsvButton = new javax.swing.JButton();
+        exportExcelButton = new javax.swing.JButton();
+        UpdateButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -208,19 +238,31 @@ public class AdminView extends javax.swing.JFrame {
                 "No", "<html> Kode <br> Prov. </html>", "<html> Kode <br> Kab. </html>", "<html> Kode <br> Kec. </html>", "<html> Kode <br> KJU </html>", "<html>     No. <br>      Urut <br>     dalam <br>     satu <br>     Kab/ <br>     Kota  </html>", "<html>     Nama <br>     Perusahaan <br>     Pertanian </html>", "<html>     Alamat <br>     Perusahaan <br>     Pertanian </html>", "<html>     No <br>     Telepon </html>", "<html>     No <br>     Faksimili <br> </html>", "<html>     Bentuk <br>     Badan <br>     Hukum </html>", "<html>Konfirmasi<br>Kunjungan</html>", "<html>Status<br>Perusahaan</html>", "<html>Tanaman<br>Pangan</html>", "<html>Hortikultura</html>", "<html>Perkebunan</html>", "Peternakan", "Kehutanan", "Perikanan", "<html>Jenis<br>Usaha<br>Utama</html>"
             }
         ));
+        perusahaanTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                perusahaanTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(perusahaanTable);
 
-        jButton3.setText("Export File (.csv)");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        exportCsvButton.setText("Export File (.csv)");
+        exportCsvButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                exportCsvButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Export File (.xls)");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        exportExcelButton.setText("Export File (.xls)");
+        exportExcelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                exportExcelButtonActionPerformed(evt);
+            }
+        });
+
+        UpdateButton.setText("Update");
+        UpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateButtonActionPerformed(evt);
             }
         });
 
@@ -229,31 +271,36 @@ public class AdminView extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(58, 58, 58)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10)
                                     .addGap(58, 58, 58)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 942, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(55, 55, 55)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 942, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(exportCsvButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(exportExcelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(82, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(182, 182, 182)
+                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel6, jLabel9});
@@ -278,9 +325,11 @@ public class AdminView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(121, Short.MAX_VALUE))
+                    .addComponent(exportCsvButton)
+                    .addComponent(exportExcelButton))
+                .addGap(18, 18, 18)
+                .addComponent(UpdateButton)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(229, 88, 7));
@@ -333,16 +382,226 @@ public class AdminView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void exportCsvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCsvButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file save");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("CSV Files", "csv")); // Menambahkan filter file CSV
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+            // Menambahkan ekstensi .csv jika belum ada
+            if (!filePath.toLowerCase().endsWith(".csv")) {
+                fileToSave = new File(filePath + ".csv");
+            }
+
+            try {
+                FileWriter fw = new FileWriter(fileToSave);
+                BufferedWriter bw = new BufferedWriter(fw);
+
+                // Menulis judul kolom
+                for (int i = 0; i < perusahaanTable.getColumnCount(); i++) {
+                    bw.write(perusahaanTable.getColumnName(i) + ",");
+                }
+                bw.newLine();
+
+                // Menulis data ke file
+                for (int i = 0; i < perusahaanTable.getRowCount(); i++) {
+                    for (int j = 0; j < perusahaanTable.getColumnCount(); j++) {
+                        Object value = perusahaanTable.getValueAt(i, j);
+                        if (value != null) {
+                            bw.write(value.toString() + ",");
+                        } else {
+                            bw.write("NULL,");
+                        }
+                    }
+                    bw.newLine();
+                }
+
+                bw.close();
+                fw.close();
+                JOptionPane.showMessageDialog(this, "SUCCESSFULLY SAVED", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+
+                // Membuka file setelah penulisan selesai
+                openFile(fileToSave.getAbsolutePath());
+            } catch (IOException ex) {
+//                JOptionPane.showMessageDialog(this, "ERROR", "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    }//GEN-LAST:event_exportCsvButtonActionPerformed
+
+    private void exportExcelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportExcelButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        try{
+           JFileChooser jFileChooser = new JFileChooser();
+           jFileChooser.showSaveDialog(this);
+           File saveFile = jFileChooser.getSelectedFile();
+           
+           if(saveFile != null){
+               saveFile = new File(saveFile.toString()+".xlsx");
+               Workbook wb = new XSSFWorkbook();
+               Sheet sheet = wb.createSheet("customer");
+               
+               org.apache.poi.ss.usermodel.Row rowCol = sheet.createRow(0);
+               for(int i=0;i<perusahaanTable.getColumnCount();i++){
+                   Cell cell = rowCol.createCell(i);
+                   cell.setCellValue(perusahaanTable.getColumnName(i));
+               }
+               
+               for(int j=0;j<perusahaanTable.getRowCount();j++){
+                   org.apache.poi.ss.usermodel.Row row = sheet.createRow(j+1);
+                   for(int k=0;k<perusahaanTable.getColumnCount();k++){
+                       Cell cell = row.createCell(k);
+                       if(perusahaanTable.getValueAt(j, k)!=null){
+                           cell.setCellValue(perusahaanTable.getValueAt(j, k).toString());
+                       }
+                   }
+               }
+               FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
+               wb.write(out);
+               wb.close();
+               out.close();
+               openFile(saveFile.toString());
+           }else{
+               JOptionPane.showMessageDialog(null,"Error al generar archivo");
+           }
+       }catch(FileNotFoundException e){
+           System.out.println(e);
+       }catch(IOException io){
+           System.out.println(io);
+       }
 
-private void viewTable() {
+        
+    }//GEN-LAST:event_exportExcelButtonActionPerformed
+
+    private void perusahaanTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_perusahaanTableMouseClicked
+        // TODO add your handling code here:
+
+        int barisTampilan = perusahaanTable.rowAtPoint(evt.getPoint());
+        int barisModel = perusahaanTable.convertRowIndexToModel(barisTampilan);
+
+        DefaultTableModel dtm = (DefaultTableModel) perusahaanTable.getModel();
+        String id = dtm.getValueAt(barisModel, 0).toString();
+        String existId = dtm.getValueAt(perusahaanTable.getSelectedRow(), 0).toString();
+        this.id=existId;
+//        System.out.println("ID: " + id);
+
+        
+//        String prov=perusahaanTable.getValueAt(baris,1).toString();
+//        System.out.println("prov");
+//        String kab=perusahaanTable.getValueAt(baris,2).toString();
+//        String kec=perusahaanTable.getValueAt(baris,3).toString();
+//        String kju=perusahaanTable.getValueAt(baris,4).toString();
+//        String noUrut=perusahaanTable.getValueAt(baris,5).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        String nama=perusahaanTable.getValueAt(baris,6).toString();
+//        
+//        
+////        TextFieldId.setText(id);
+////        namaKegiatanTextField.setText(namaKegiatan);
+////        jenisComboBox.setSelectedItem(jenis);
+////        levelComboBox.setSelectedItem(level);
+////        durasiTextField.setText(durasi);
+    }//GEN-LAST:event_perusahaanTableMouseClicked
+
+    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+        // TODO add your handling code here:
+        AdminUpdate da = new AdminUpdate();
+        da.data(this.id);
+        System.out.println("id:"+this.id);
+//        da.transfer(2001, "2211098","13", "1301", "1301013", "no", "nama", "alamat", "no_telp", "no_fax", "email"," badanHukum", "1", "1", "1","1","1","3a,3f","1","1","1","1");
+//        this.setVisible(false);
+        da.setVisible(true);
+        
+    }//GEN-LAST:event_UpdateButtonActionPerformed
+
+//private void viewTable() {
+//    DefaultTableModel tb = new DefaultTableModel();
+//    tb.addColumn("id");
+//    tb.addColumn("No");
+//    tb.addColumn("Kode Prov");
+//    tb.addColumn("Kode Kab");
+//    tb.addColumn("Kode Kec");
+//    tb.addColumn("Kode KJU");
+//    tb.addColumn("No. Urut dalam satu kab/kot");
+//    tb.addColumn("Nama Perusahaan");
+//    tb.addColumn("Alamat Perusahaan");
+//    tb.addColumn("No. Telp");
+//    tb.addColumn("No. Faks");
+//    tb.addColumn("Bentuk Badan Hukum");
+//    tb.addColumn("Konfirmasi Kunjungan");
+//    tb.addColumn("Status Perusahaan");
+//    tb.addColumn("Tanaman Pangan");
+//    tb.addColumn("Holtikultura");
+//    tb.addColumn("Perkebunan");
+//    tb.addColumn("Peternakan");
+//    tb.addColumn("Kehutanan");
+//    tb.addColumn("Perikanan");
+//    tb.addColumn("Jenis Usaha Utama");
+//    perusahaanTable.setModel(tb);
+//
+//    try {
+//        // Mengambil data dari database
+//       Statement stat = conn.createStatement();
+//       ResultSet rs = stat.executeQuery("SELECT * FROM perusahaan");
+//       int i = 1;
+//       while (rs.next()) {
+//           tb.addRow(new Object[]{
+//               rs.getString("id"),
+//               i,
+//               rs.getString("provinsi"),
+//               rs.getString("kab_kot"),
+//               rs.getString("kec"),
+//               rs.getString("kode_kju"),
+//               rs.getString("no_urut"),
+//               rs.getString("nama"),
+//               rs.getString("alamat"),
+//               rs.getString("no_telp"),
+//               rs.getString("no_fak"),
+//               rs.getString("badan_hukum"),
+//               rs.getString("sudah_dikunjungi"),
+//               rs.getString("status"),
+//               rs.getString("ada_tanaman_pangan"),
+//               rs.getString("ada_hortikultura"),
+//               rs.getString("perkebunan"),
+//               rs.getString("ada_peternakan"),
+//               rs.getString("ada_kehutanan"),
+//               rs.getString("ada_perikanan"),
+//               rs.getString("jenis_usaha")
+//           });
+//           i++;
+//       }
+//        TableColumnModel columnModel = perusahaanTable.getColumnModel();
+//        TableColumn idColumn = columnModel.getColumn(0);
+//        columnModel.removeColumn(idColumn);
+//    } catch (Exception e) {
+//        System.out.println(e);
+//    }
+//}
+    
+
+
+public void openFile(String file){
+        try{
+            File path = new File(file);
+            Desktop.getDesktop().open(path);
+        }catch(IOException ioe){
+            System.out.println(ioe);
+        }
+}
+ private void viewTable() {
     DefaultTableModel tb = new DefaultTableModel();
+  
+    tb.addColumn("ID"); // Add the hidden column "ID"
     tb.addColumn("No");
     tb.addColumn("Kode Prov");
     tb.addColumn("Kode Kab");
@@ -367,40 +626,45 @@ private void viewTable() {
 
     try {
         // Mengambil data dari database
-       Statement stat = conn.createStatement();
-       ResultSet rs = stat.executeQuery("SELECT * FROM perusahaan");
-       int i = 1;
-       while (rs.next()) {
-           tb.addRow(new Object[]{
-               i,
-               rs.getString("provinsi"),
-               rs.getString("kab_kot"),
-               rs.getString("kec"),
-               rs.getString("kode_kju"),
-               rs.getString("no_urut"),
-               rs.getString("nama"),
-               rs.getString("alamat"),
-               rs.getString("no_telp"),
-               rs.getString("no_fak"),
-               rs.getString("badan_hukum"),
-               rs.getString("sudah_dikunjungi"),
-               rs.getString("status"),
-               rs.getString("ada_tanaman_pangan"),
-               rs.getString("ada_hortikultura"),
-               rs.getString("perkebunan"),
-               rs.getString("ada_peternakan"),
-               rs.getString("ada_kehutanan"),
-               rs.getString("ada_perikanan"),
-               rs.getString("jenis_usaha")
-           });
-           i++;
-       }
+        Statement stat = conn.createStatement();
+        ResultSet rs = stat.executeQuery("SELECT * FROM perusahaan");
+        int i = 1;
+        while (rs.next()) {
+            tb.addRow(new Object[]{
+                rs.getString("id"), // Add the ID value to the hidden column
+                i,
+                rs.getString("provinsi"),
+                rs.getString("kab_kot"),
+                rs.getString("kec"),
+                rs.getString("kode_kju"),
+                rs.getString("no_urut"),
+                rs.getString("nama"),
+                rs.getString("alamat"),
+                rs.getString("no_telp"),
+                rs.getString("no_fak"),
+                rs.getString("badan_hukum"),
+                rs.getString("sudah_dikunjungi"),
+                rs.getString("status"),
+                rs.getString("ada_tanaman_pangan"),
+                rs.getString("ada_hortikultura"),
+                rs.getString("perkebunan"),
+                rs.getString("ada_peternakan"),
+                rs.getString("ada_kehutanan"),
+                rs.getString("ada_perikanan"),
+                rs.getString("jenis_usaha")
+            });
+            i++;
+        }
 
+        // Hide the "ID" column
+        TableColumnModel columnModel = perusahaanTable.getColumnModel();
+        TableColumn idColumn = columnModel.getColumn(0);
+        columnModel.removeColumn(idColumn);
+        
     } catch (Exception e) {
         System.out.println(e);
     }
 }
-
     /**
      * @param args the command line arguments
      */
@@ -438,10 +702,11 @@ private void viewTable() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton UpdateButton;
+    private javax.swing.JButton exportCsvButton;
+    private javax.swing.JButton exportExcelButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

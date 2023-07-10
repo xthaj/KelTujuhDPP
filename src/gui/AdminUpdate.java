@@ -4,11 +4,9 @@
  */
 package gui;
 
-import java.awt.Component;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.util.Calendar;
 import javax.swing.JCheckBox;
@@ -19,22 +17,25 @@ import keltujuhdpp.entity.Validasi;
  *
  * @author hamda
  */
-public class AdminInsert extends javax.swing.JFrame {
+public class AdminUpdate extends javax.swing.JFrame {
     private Connection conn;
 //    private DefaultTableModel model;
     private PreparedStatement pstmt;
     private Statement stat;
     private ResultSet rs;
     private boolean validasi=true;
+    private String id;
+    
     /**
      * Creates new form ProfileAdmin
      */
-    public AdminInsert() {
+    public AdminUpdate() {
         initComponents();
         conn=connection.getConnection();
         getProvinsi();
         System.out.println("masuk admin insert");
-        getTahun();
+//        data();
+       
     }
 
     /**
@@ -136,7 +137,7 @@ public class AdminInsert extends javax.swing.JFrame {
         perikananComboBox = new javax.swing.JComboBox<>();
         kehutananComboBox = new javax.swing.JComboBox<>();
         usahaUtamaComboBox = new javax.swing.JComboBox<>();
-        InsertButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
         hapusButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -760,12 +761,12 @@ public class AdminInsert extends javax.swing.JFrame {
         usahaUtamaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
         usahaUtamaComboBox.setSelectedIndex(-1);
 
-        InsertButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        InsertButton.setForeground(new java.awt.Color(229, 88, 7));
-        InsertButton.setText("Insert");
-        InsertButton.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        updateButton.setForeground(new java.awt.Color(229, 88, 7));
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InsertButtonActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
 
@@ -789,7 +790,7 @@ public class AdminInsert extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(hapusButton, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(InsertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(DPPPanelLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -903,7 +904,7 @@ public class AdminInsert extends javax.swing.JFrame {
                     .addComponent(usahaUtamaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(InsertButton)
+                    .addComponent(updateButton)
                     .addComponent(hapusButton))
                 .addGap(50, 50, 50))
         );
@@ -932,7 +933,7 @@ public class AdminInsert extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("ADMIN - INSERT");
+        jLabel7.setText("ADMIN - UPDATE");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -941,7 +942,7 @@ public class AdminInsert extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(371, 371, 371)
                 .addComponent(jLabel7)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1004,7 +1005,7 @@ public class AdminInsert extends javax.swing.JFrame {
 //        kecamatanComboBox.setSelectedIndex(-1);
     }//GEN-LAST:event_kabKotComboBoxActionPerformed
 
-    private void InsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertButtonActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         if (!ValidasiNull()){
             JOptionPane.showMessageDialog(null, "Semua input harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
@@ -1056,7 +1057,13 @@ public class AdminInsert extends javax.swing.JFrame {
                 kode = usahaUtamaComboBox.getSelectedIndex() + 1;
                 String usahaUtama = "" + kode;
 
-                String myQuery = "INSERT INTO `perusahaan`(`tahun`, `provinsi`, `kab_kot`, `kec`, `kode_kju`, `no_urut`, `nama`, `alamat`, `no_telp`, `no_fak`, `badan_hukum`, `sudah_dikunjungi`, `status`, `ada_tanaman_pangan`, `ada_hortikultura`, `perkebunan`, `ada_peternakan`, `ada_kehutanan`, `ada_perikanan`, `jenis_usaha`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String myQuery = "UPDATE `perusahaan` SET `tahun`=?, `provinsi`=?, "
+                        + "`kab_kot`=?, `kec`=?, `kode_kju`=?, `no_urut`=?, `nama`=?, "
+                        + "`alamat`=?, `no_telp`=?, `no_fak`=?, `badan_hukum`=?, "
+                        + "`sudah_dikunjungi`=?, `status`=?, `ada_tanaman_pangan`=?, "
+                        + "`ada_hortikultura`=?, `perkebunan`=?, `ada_peternakan`=?, `ada_kehutanan`=?, "
+                        + "`ada_perikanan`=?, `jenis_usaha`=? WHERE `id`=?";
+                
                 pstmt = conn.prepareStatement(myQuery);
                 pstmt.setString(1, tahun);
                 pstmt.setString(2, provinsi);
@@ -1078,7 +1085,9 @@ public class AdminInsert extends javax.swing.JFrame {
                 pstmt.setString(18, kehutanan);
                 pstmt.setString(19, perikanan);
                 pstmt.setString(20, usahaUtama);
+                pstmt.setString(21, id); // Set nilai parameter id
                 pstmt.executeUpdate();
+
 
                 hapus();
 
@@ -1090,7 +1099,7 @@ public class AdminInsert extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Data yang anda Inputkan Belum Sesuai!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-    }//GEN-LAST:event_InsertButtonActionPerformed
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     private void hapus(){
             provinsiComboBox.setSelectedIndex(-1);
@@ -1109,7 +1118,8 @@ public class AdminInsert extends javax.swing.JFrame {
             tanamanPanganComboBox.setSelectedIndex(-1);
             hortikulturaComboBox.setSelectedIndex(-1);
             
-            JCheckBox[] checkboxes = { aCheckBox, bCheckBox, cCheckBox, dCheckBox, eCheckBox, fCheckBox, gCheckBox, hCheckBox, iCheckBox, jCheckBox, kCheckBox };            
+            JCheckBox[] checkboxes = { aCheckBox, bCheckBox, cCheckBox, dCheckBox, eCheckBox, fCheckBox, gCheckBox, hCheckBox, iCheckBox, jCheckBox, kCheckBox };
+               
             String perkebunan = "";
             for (int i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].setSelected(false) ;
@@ -1305,6 +1315,7 @@ public class AdminInsert extends javax.swing.JFrame {
         }
     }
     
+    
     private void getKabKot() {
         // Mendapatkan provinsi yang dipilih
         if(provinsiComboBox.getSelectedItem()!=null){
@@ -1356,23 +1367,166 @@ public class AdminInsert extends javax.swing.JFrame {
 
     } catch (SQLException e) {
         e.printStackTrace();
-    } finally {
-        // Menutup semua objek JDBC
-        try {
-            if (rs != null) {
-                rs.close();
+    } 
+
+}
+    
+    public void data(String id) {
+    try {
+    
+        String myQuery = "SELECT * FROM perusahaan WHERE id=?";
+        PreparedStatement pstmt = conn.prepareStatement(myQuery);
+        pstmt.setString(1, id);
+        System.out.println("id:"+id);
+        this.id=id;
+        ResultSet rs = pstmt.executeQuery();
+        System.out.println("masuk data");
+        JCheckBox[] checkboxes = { aCheckBox, bCheckBox, cCheckBox, dCheckBox, eCheckBox, fCheckBox, gCheckBox, hCheckBox, iCheckBox, jCheckBox, kCheckBox };
+        if(rs.next()){
+        tahunTextField.setText(rs.getString("tahun"));
+            System.out.println(rs.getString("tahun"));
+        for (int i = 0; i < provinsiComboBox.getItemCount(); i++) {
+            String comboBoxItem = provinsiComboBox.getItemAt(i).toString();
+            if (comboBoxItem.startsWith(rs.getString("provinsi"))) {
+                provinsiComboBox.setSelectedIndex(i);
+                break;
             }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        for (int i = 0; i < kabKotComboBox.getItemCount(); i++) {
+            String comboBoxItem = kabKotComboBox.getItemAt(i).toString();
+            if (comboBoxItem.startsWith(rs.getString("kab_kot"))) {
+                kabKotComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < kecamatanComboBox.getItemCount(); i++) {
+            String comboBoxItem = kecamatanComboBox.getItemAt(i).toString();
+            if (comboBoxItem.startsWith(rs.getString("kec"))) {
+                kecamatanComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        kodeKJUTextField.setText(rs.getString("kode_kju"));
+        noUrutTextField.setText(rs.getString("no_urut"));
+        namaPerusahaanTextField.setText(rs.getString("nama"));
+        alamatTextArea.setText(rs.getString("alamat"));
+        noTeleponTextField.setText(rs.getString("no_telp"));
+        noFaxTextField.setText(rs.getString("no_fak"));
+//        emailTextField.setText(rs.getString("email"));
+        bentukBadanHukumComboBox.setSelectedIndex(Integer.parseInt(rs.getString("badan_hukum"))-1);
+        statusKunjunganComboBox.setSelectedIndex(Integer.parseInt(rs.getString("sudah_dikunjungi")));
+        statusPerusahaanComboBox.setSelectedIndex(Integer.parseInt(rs.getString("status"))-1);
+        tanamanPanganComboBox.setSelectedIndex(Integer.parseInt(rs.getString("ada_tanaman_pangan")));
+        hortikulturaComboBox.setSelectedIndex(Integer.parseInt(rs.getString("ada_hortikultura")));
+        peternakanComboBox.setSelectedIndex(Integer.parseInt(rs.getString("ada_peternakan")));
+        kehutananComboBox.setSelectedIndex(Integer.parseInt(rs.getString("ada_kehutanan")));
+        perikananComboBox.setSelectedIndex(Integer.parseInt(rs.getString("ada_perikanan")));
+        usahaUtamaComboBox.setSelectedIndex(Integer.parseInt(rs.getString("jenis_usaha"))-1);
+    
+                String[] perkebunanArray = rs.getString("perkebunan").split(",");
+
+                // Memeriksa setiap item pada JComboBox
+                for (String item : perkebunanArray) {
+                    // Mengambil karakter setelah angka 3
+                    char checkboxChar = item.charAt(1);
+
+                    // Mengubah karakter menjadi indeks untuk checkboxes
+                    int checkboxIndex = checkboxChar - 'a';
+
+                    // Memeriksa checkbox yang sesuai
+                    if (checkboxIndex >= 0 && checkboxIndex < checkboxes.length) {
+                        checkboxes[checkboxIndex].setSelected(true);
+                    }
+                }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
 }
 
+public void transferID(String id){
+    this.id=id;
+    System.out.println("id:"+id);
+}
+//public void transfer(int id, String tahun, String prov, String kab, String kec, String kju, String no, String nama,
+//        String alamat, String no_telp, String no_fax, String email, String badanHukum, String statusKunjungan,
+//        String statusPerusahaan, String tanamanPangan, String hortikultura , String perkebunan,
+//        String peternakan,  String kehutanan, String perikanan, String usahaUtama) {
+//    
+//    
+//        JCheckBox[] checkboxes = { aCheckBox, bCheckBox, cCheckBox, dCheckBox, eCheckBox, fCheckBox, gCheckBox, hCheckBox, iCheckBox, jCheckBox, kCheckBox };
+//        tahunTextField.setText(tahun);
+//        
+//        for (int i = 0; i < provinsiComboBox.getItemCount(); i++) {
+//            String comboBoxItem = provinsiComboBox.getItemAt(i).toString();
+//            if (comboBoxItem.startsWith(prov)) {
+//                provinsiComboBox.setSelectedIndex(i);
+//                break;
+//            }
+//        }
+//        for (int i = 0; i < kabKotComboBox.getItemCount(); i++) {
+//            String comboBoxItem = kabKotComboBox.getItemAt(i).toString();
+//            if (comboBoxItem.startsWith(kab)) {
+//                kabKotComboBox.setSelectedIndex(i);
+//                break;
+//            }
+//        }
+//
+//        for (int i = 0; i < kecamatanComboBox.getItemCount(); i++) {
+//            String comboBoxItem = kecamatanComboBox.getItemAt(i).toString();
+//            if (comboBoxItem.startsWith(kec)) {
+//                kecamatanComboBox.setSelectedIndex(i);
+//                break;
+//            }
+//        }
+//        
+//        kodeKJUTextField.setText(kju);
+//        noUrutTextField.setText(no);
+//        namaPerusahaanTextField.setText(nama);
+//        alamatTextArea.setText(alamat);
+//        noTeleponTextField.setText(no_telp);
+//        noFaxTextField.setText(no_fax);
+//        emailTextField.setText(email);
+//        bentukBadanHukumComboBox.setSelectedIndex(Integer.parseInt(badanHukum)-1);
+//        statusKunjunganComboBox.setSelectedIndex(Integer.parseInt(statusKunjungan));
+//        statusPerusahaanComboBox.setSelectedIndex(Integer.parseInt(statusPerusahaan)-1);
+//        tanamanPanganComboBox.setSelectedIndex(Integer.parseInt(tanamanPangan));
+//        hortikulturaComboBox.setSelectedIndex(Integer.parseInt(hortikultura));
+//        peternakanComboBox.setSelectedIndex(Integer.parseInt(peternakan));
+//        kehutananComboBox.setSelectedIndex(Integer.parseInt(kehutanan));
+//        perikananComboBox.setSelectedIndex(Integer.parseInt(perikanan));
+//        usahaUtamaComboBox.setSelectedIndex(Integer.parseInt(usahaUtama)-1);
+//    
+//
+////                String selectedItem = (String) provinsiComboBox.getSelectedItem();
+////                String provinsi = selectedItem.substring(0, 2);
+////                selectedItem = (String) kabKotComboBox.getSelectedItem();
+////                String kabKot = selectedItem.substring(0, 4);
+////                selectedItem = (String) kecamatanComboBox.getSelectedItem();
+////                String kecamatan = selectedItem.substring(0, 7);
+////
+////                // Memisahkan string perkebunan menjadi array
+//                String[] perkebunanArray = perkebunan.split(",");
+//
+//                // Memeriksa setiap item pada JComboBox
+//                for (String item : perkebunanArray) {
+//                    // Mengambil karakter setelah angka 3
+//                    char checkboxChar = item.charAt(1);
+//
+//                    // Mengubah karakter menjadi indeks untuk checkboxes
+//                    int checkboxIndex = checkboxChar - 'a';
+//
+//                    // Memeriksa checkbox yang sesuai
+//                    if (checkboxIndex >= 0 && checkboxIndex < checkboxes.length) {
+//                        checkboxes[checkboxIndex].setSelected(true);
+//                    }
+//                }
+//}
   
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1390,35 +1544,21 @@ public class AdminInsert extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminInsert.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminInsert().setVisible(true);
+                new AdminUpdate().setVisible(true);
             }
         });
     }
@@ -1430,7 +1570,6 @@ public class AdminInsert extends javax.swing.JFrame {
     private javax.swing.JPanel DPPPanel;
     private javax.swing.JLabel EmailLabel;
     private javax.swing.JLabel HortikulturaLabel;
-    private javax.swing.JButton InsertButton;
     private javax.swing.JLabel KIPJudulLabel;
     private javax.swing.JPanel KIPJudulPanel;
     private javax.swing.JPanel KIPPanel;
@@ -1518,6 +1657,7 @@ public class AdminInsert extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> statusPerusahaanComboBox;
     private javax.swing.JTextField tahunTextField;
     private javax.swing.JComboBox<String> tanamanPanganComboBox;
+    private javax.swing.JButton updateButton;
     private javax.swing.JComboBox<String> usahaUtamaComboBox;
     // End of variables declaration//GEN-END:variables
 }

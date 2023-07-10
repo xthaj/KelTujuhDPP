@@ -104,6 +104,8 @@ public class AdminInsert extends javax.swing.JFrame {
         space3 = new javax.swing.JLabel();
         space4 = new javax.swing.JLabel();
         space5 = new javax.swing.JLabel();
+        space6 = new javax.swing.JLabel();
+        space7 = new javax.swing.JLabel();
         DPPPanel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -345,6 +347,12 @@ public class AdminInsert extends javax.swing.JFrame {
         BentukBadanHukumLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BentukBadanHukumLabel.setText("Bentuk Badan Hukum");
 
+        kodeKJUTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                kodeKJUTextFieldKeyReleased(evt);
+            }
+        });
+
         tahunTextField.setForeground(new java.awt.Color(204, 204, 204));
         tahunTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -505,6 +513,16 @@ public class AdminInsert extends javax.swing.JFrame {
         space5.setText(" ");
         errorNoKabKot.setVisible(false);
 
+        space6.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space6.setForeground(new java.awt.Color(255, 0, 0));
+        space6.setText(" ");
+        errorNoKabKot.setVisible(false);
+
+        space7.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space7.setForeground(new java.awt.Color(255, 0, 0));
+        space7.setText(" ");
+        errorNoKabKot.setVisible(false);
+
         javax.swing.GroupLayout KIPPanelLayout = new javax.swing.GroupLayout(KIPPanel);
         KIPPanel.setLayout(KIPPanelLayout);
         KIPPanelLayout.setHorizontalGroup(
@@ -525,12 +543,16 @@ public class AdminInsert extends javax.swing.JFrame {
                     .addComponent(NoFaxLabel)
                     .addComponent(EmailLabel)
                     .addComponent(BentukBadanHukumLabel)
-                    .addComponent(space)
+                    .addGroup(KIPPanelLayout.createSequentialGroup()
+                        .addComponent(space7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(space))
                     .addComponent(space1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(space2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(space3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(space4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(space4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(space6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(errorEmail)
                     .addComponent(errorFax)
@@ -585,7 +607,9 @@ public class AdminInsert extends javax.swing.JFrame {
                     .addComponent(kodeKJUTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(KodeKJULabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorKJU)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorKJU)
+                    .addComponent(space6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(noUrutTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -593,7 +617,8 @@ public class AdminInsert extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(errorNoKabKot)
-                    .addComponent(space))
+                    .addComponent(space)
+                    .addComponent(space7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(namaPerusahaanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1122,7 +1147,13 @@ public class AdminInsert extends javax.swing.JFrame {
     }
     private void noUrutTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noUrutTextFieldKeyReleased
         // TODO add your handling code here:
-
+        if(Validasi.cekNoUrut(noUrutTextField.getText())==false){
+           errorNoKabKot.setVisible(true);
+           validasi=false;
+       }else{
+            errorNoKabKot.setVisible(false);
+            validasi=true;
+       }
     }//GEN-LAST:event_noUrutTextFieldKeyReleased
 
     private void namaPerusahaanTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_namaPerusahaanTextFieldKeyReleased
@@ -1185,6 +1216,17 @@ public class AdminInsert extends javax.swing.JFrame {
         // TODO add your handling code here:
         hapus();
     }//GEN-LAST:event_hapusButtonActionPerformed
+
+    private void kodeKJUTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kodeKJUTextFieldKeyReleased
+        // TODO add your handling code here:
+        if(Validasi.cekKodeKJU(kodeKJUTextField.getText())==false){
+           errorKJU.setVisible(true);
+           validasi=false;
+       } else{
+            errorKJU.setVisible(false);
+            validasi=true;
+        }
+    }//GEN-LAST:event_kodeKJUTextFieldKeyReleased
 
     private void getTahun(){
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -1371,6 +1413,9 @@ public class AdminInsert extends javax.swing.JFrame {
     }
 }
 
+public void setNamaPerusahaan(String nama) {
+    namaPerusahaanTextField.setText(nama);
+}
   
     
     /**
@@ -1514,6 +1559,8 @@ public class AdminInsert extends javax.swing.JFrame {
     private javax.swing.JLabel space3;
     private javax.swing.JLabel space4;
     private javax.swing.JLabel space5;
+    private javax.swing.JLabel space6;
+    private javax.swing.JLabel space7;
     private javax.swing.JComboBox<String> statusKunjunganComboBox;
     private javax.swing.JComboBox<String> statusPerusahaanComboBox;
     private javax.swing.JTextField tahunTextField;
