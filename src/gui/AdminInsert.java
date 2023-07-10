@@ -4,17 +4,37 @@
  */
 package gui;
 
+import java.awt.Component;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import java.util.Calendar;
+import javax.swing.JCheckBox;
+import keltujuhdpp.entity.Validasi;
+//import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hamda
  */
 public class AdminInsert extends javax.swing.JFrame {
-
+    private Connection conn;
+//    private DefaultTableModel model;
+    private PreparedStatement pstmt;
+    private Statement stat;
+    private ResultSet rs;
+    private boolean validasi=true;
     /**
      * Creates new form ProfileAdmin
      */
     public AdminInsert() {
         initComponents();
+        conn=connection.getConnection();
+        getProvinsi();
+        System.out.println("masuk admin insert");
+        getTahun();
     }
 
     /**
@@ -55,19 +75,19 @@ public class AdminInsert extends javax.swing.JFrame {
         NoFaxLabel = new javax.swing.JLabel();
         EmailLabel = new javax.swing.JLabel();
         BentukBadanHukumLabel = new javax.swing.JLabel();
-        KodeKJUTextField = new javax.swing.JTextField();
-        TahunTextField = new javax.swing.JTextField();
-        ProvinsiComboBox = new javax.swing.JComboBox<>();
-        KabKotaComboBox = new javax.swing.JComboBox<>();
-        KecamatanComboBox = new javax.swing.JComboBox<>();
-        NoUrutTextField = new javax.swing.JTextField();
-        NamaPerusahaanTextField = new javax.swing.JTextField();
+        kodeKJUTextField = new javax.swing.JTextField();
+        tahunTextField = new javax.swing.JTextField();
+        provinsiComboBox = new javax.swing.JComboBox<>();
+        kabKotComboBox = new javax.swing.JComboBox<>();
+        kecamatanComboBox = new javax.swing.JComboBox<>();
+        noUrutTextField = new javax.swing.JTextField();
+        namaPerusahaanTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        AlamatTextArea = new javax.swing.JTextArea();
-        NoTeleponTextField = new javax.swing.JTextField();
-        NoFaxTextField = new javax.swing.JTextField();
-        EmailTextField = new javax.swing.JTextField();
-        BentukBadanHukumComboBox = new javax.swing.JComboBox<>();
+        alamatTextArea = new javax.swing.JTextArea();
+        noTeleponTextField = new javax.swing.JTextField();
+        noFaxTextField = new javax.swing.JTextField();
+        emailTextField = new javax.swing.JTextField();
+        bentukBadanHukumComboBox = new javax.swing.JComboBox<>();
         KIPJudulPanel = new javax.swing.JPanel();
         KIPJudulLabel = new javax.swing.JLabel();
         errorTahun = new javax.swing.JLabel();
@@ -78,6 +98,12 @@ public class AdminInsert extends javax.swing.JFrame {
         errorTelepon = new javax.swing.JLabel();
         errorFax = new javax.swing.JLabel();
         errorEmail = new javax.swing.JLabel();
+        space = new javax.swing.JLabel();
+        space1 = new javax.swing.JLabel();
+        space2 = new javax.swing.JLabel();
+        space3 = new javax.swing.JLabel();
+        space4 = new javax.swing.JLabel();
+        space5 = new javax.swing.JLabel();
         DPPPanel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -91,26 +117,27 @@ public class AdminInsert extends javax.swing.JFrame {
         KehutananLabel = new javax.swing.JLabel();
         PerikananLabel = new javax.swing.JLabel();
         UsahaUtamaLabel = new javax.swing.JLabel();
-        StatuKunjunganBox = new javax.swing.JComboBox<>();
-        StatusPerusahanBox = new javax.swing.JComboBox<>();
-        TanamanPanganComboBox = new javax.swing.JComboBox<>();
-        HortikulturaComboBox = new javax.swing.JComboBox<>();
-        KakaoCokelatCheckBox = new javax.swing.JCheckBox();
-        KaretCheckBox = new javax.swing.JCheckBox();
-        KelapaSawitCheckBox = new javax.swing.JCheckBox();
-        KopiCheckBox = new javax.swing.JCheckBox();
-        TehCheckBox = new javax.swing.JCheckBox();
-        TebuCheckBox = new javax.swing.JCheckBox();
-        TembakauCheckBox = new javax.swing.JCheckBox();
-        CengkehCheckBox = new javax.swing.JCheckBox();
-        KelapaCheckBox = new javax.swing.JCheckBox();
-        LadaCheckBox = new javax.swing.JCheckBox();
-        TanamanLainCheckBox = new javax.swing.JCheckBox();
-        PeternakanComboBox = new javax.swing.JComboBox<>();
-        PerikananComboBox = new javax.swing.JComboBox<>();
-        KehutananComboBox = new javax.swing.JComboBox<>();
-        UsahaUtamaComboBox = new javax.swing.JComboBox<>();
+        statusKunjunganComboBox = new javax.swing.JComboBox<>();
+        statusPerusahaanComboBox = new javax.swing.JComboBox<>();
+        tanamanPanganComboBox = new javax.swing.JComboBox<>();
+        hortikulturaComboBox = new javax.swing.JComboBox<>();
+        aCheckBox = new javax.swing.JCheckBox();
+        bCheckBox = new javax.swing.JCheckBox();
+        cCheckBox = new javax.swing.JCheckBox();
+        dCheckBox = new javax.swing.JCheckBox();
+        eCheckBox = new javax.swing.JCheckBox();
+        fCheckBox = new javax.swing.JCheckBox();
+        gCheckBox = new javax.swing.JCheckBox();
+        hCheckBox = new javax.swing.JCheckBox();
+        iCheckBox = new javax.swing.JCheckBox();
+        jCheckBox = new javax.swing.JCheckBox();
+        kCheckBox = new javax.swing.JCheckBox();
+        peternakanComboBox = new javax.swing.JComboBox<>();
+        perikananComboBox = new javax.swing.JComboBox<>();
+        kehutananComboBox = new javax.swing.JComboBox<>();
+        usahaUtamaComboBox = new javax.swing.JComboBox<>();
         InsertButton = new javax.swing.JButton();
+        hapusButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -272,7 +299,6 @@ public class AdminInsert extends javax.swing.JFrame {
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 329, -1));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(229, 88, 7));
         jButton1.setText("LOGOUT");
@@ -319,24 +345,71 @@ public class AdminInsert extends javax.swing.JFrame {
         BentukBadanHukumLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BentukBadanHukumLabel.setText("Bentuk Badan Hukum");
 
-        TahunTextField.setForeground(new java.awt.Color(204, 204, 204));
-        TahunTextField.addActionListener(new java.awt.event.ActionListener() {
+        tahunTextField.setForeground(new java.awt.Color(204, 204, 204));
+        tahunTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TahunTextFieldActionPerformed(evt);
+                tahunTextFieldActionPerformed(evt);
             }
         });
 
-        ProvinsiComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", " " }));
+        provinsiComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
+        provinsiComboBox.setSelectedIndex(-1);
+        provinsiComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                provinsiComboBoxActionPerformed(evt);
+            }
+        });
 
-        KabKotaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        kabKotComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kabKotComboBoxActionPerformed(evt);
+            }
+        });
 
-        KecamatanComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        kecamatanComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0" }));
+        kecamatanComboBox.setSelectedIndex(-1);
 
-        AlamatTextArea.setColumns(20);
-        AlamatTextArea.setRows(5);
-        jScrollPane1.setViewportView(AlamatTextArea);
+        noUrutTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                noUrutTextFieldKeyReleased(evt);
+            }
+        });
 
-        BentukBadanHukumComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Perusahaan Negara (PN)", "Perusahaan Daerah (PD)", "Persero", "Perum", "Perseroan Terbatas" }));
+        namaPerusahaanTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                namaPerusahaanTextFieldKeyReleased(evt);
+            }
+        });
+
+        alamatTextArea.setColumns(20);
+        alamatTextArea.setRows(5);
+        alamatTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                alamatTextAreaKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(alamatTextArea);
+
+        noTeleponTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                noTeleponTextFieldKeyReleased(evt);
+            }
+        });
+
+        noFaxTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                noFaxTextFieldKeyReleased(evt);
+            }
+        });
+
+        emailTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailTextFieldKeyReleased(evt);
+            }
+        });
+
+        bentukBadanHukumComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Perusahaan Negara (PN)", "Perusahaan Daerah (PD)", "Persero", "Perum", "Perseroan Terbatas" }));
+        bentukBadanHukumComboBox.setSelectedIndex(-1);
 
         KIPJudulPanel.setBackground(new java.awt.Color(6, 141, 169));
         KIPJudulPanel.setPreferredSize(new java.awt.Dimension(650, 100));
@@ -359,46 +432,84 @@ public class AdminInsert extends javax.swing.JFrame {
             .addGroup(KIPJudulPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(KIPJudulLabel)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         errorTahun.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorTahun.setForeground(new java.awt.Color(255, 0, 51));
         errorTahun.setText("Tidak boleh mengandung huruf!");
+        errorTahun.setVisible(false);
 
         errorKJU.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorKJU.setForeground(new java.awt.Color(255, 0, 0));
-        errorKJU.setText("Tidak boleh mengandung huruf!");
+        errorKJU.setText("Kode KJU harus berupa angka");
+        errorKJU.setVisible(false);
 
         errorNoKabKot.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorNoKabKot.setForeground(new java.awt.Color(255, 0, 0));
-        errorNoKabKot.setText("Tidak boleh mengandung huruf!");
+        errorNoKabKot.setText("No urut harus berupa angka ");
+        errorNoKabKot.setVisible(false);
 
         errorPerusahaan.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorPerusahaan.setForeground(new java.awt.Color(255, 0, 0));
-        errorPerusahaan.setText("Tidak boleh mengandung huruf!");
+        errorPerusahaan.setText("Alamat hanya berupa angka dan huruf");
+        errorPerusahaan.setVisible(false);
 
         errorAlamat.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorAlamat.setForeground(new java.awt.Color(255, 0, 0));
-        errorAlamat.setText("Tidak boleh mengandung huruf!");
+        errorAlamat.setText("Alamat hanya berupa huruf, angka, dan karakter khusus");
+        errorAlamat.setVisible(false);
 
         errorTelepon.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorTelepon.setForeground(new java.awt.Color(255, 0, 0));
-        errorTelepon.setText("Tidak boleh mengandung huruf!");
+        errorTelepon.setText("Nomor Telepon hanya berupa angka dan karakter +");
+        errorTelepon.setVisible(false);
 
         errorFax.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorFax.setForeground(new java.awt.Color(255, 0, 0));
-        errorFax.setText("Tidak boleh mengandung huruf!");
+        errorFax.setText("Nomor Fax hanya berupa angka dan karakter + - ");
+        errorFax.setVisible(false);
 
         errorEmail.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         errorEmail.setForeground(new java.awt.Color(255, 0, 0));
-        errorEmail.setText("Tidak boleh mengandung huruf!");
+        errorEmail.setText("Data yang diinputkan harus berupa email");
+        errorEmail.setVisible(false);
+
+        space.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space.setForeground(new java.awt.Color(255, 0, 0));
+        space.setText(" ");
+        errorNoKabKot.setVisible(false);
+
+        space1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space1.setForeground(new java.awt.Color(255, 0, 0));
+        space1.setText(" ");
+        errorNoKabKot.setVisible(false);
+
+        space2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space2.setForeground(new java.awt.Color(255, 0, 0));
+        space2.setText(" ");
+        errorNoKabKot.setVisible(false);
+
+        space3.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space3.setForeground(new java.awt.Color(255, 0, 0));
+        space3.setText(" ");
+        errorNoKabKot.setVisible(false);
+
+        space4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space4.setForeground(new java.awt.Color(255, 0, 0));
+        space4.setText(" ");
+        errorNoKabKot.setVisible(false);
+
+        space5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        space5.setForeground(new java.awt.Color(255, 0, 0));
+        space5.setText(" ");
+        errorNoKabKot.setVisible(false);
 
         javax.swing.GroupLayout KIPPanelLayout = new javax.swing.GroupLayout(KIPPanel);
         KIPPanel.setLayout(KIPPanelLayout);
         KIPPanelLayout.setHorizontalGroup(
             KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(KIPJudulPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+            .addComponent(KIPJudulPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, KIPPanelLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,30 +524,37 @@ public class AdminInsert extends javax.swing.JFrame {
                     .addComponent(NoTelepoLabel)
                     .addComponent(NoFaxLabel)
                     .addComponent(EmailLabel)
-                    .addComponent(BentukBadanHukumLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BentukBadanHukumLabel)
+                    .addComponent(space)
+                    .addComponent(space1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(space2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(space3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(space4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(errorEmail)
                     .addComponent(errorFax)
                     .addComponent(errorTelepon)
-                    .addComponent(errorAlamat)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, KIPPanelLayout.createSequentialGroup()
+                        .addComponent(errorAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(space5))
                     .addComponent(errorPerusahaan)
                     .addComponent(errorNoKabKot)
                     .addComponent(errorTahun)
-                    .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(TahunTextField)
-                        .addComponent(ProvinsiComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(KabKotaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(KecamatanComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(NoUrutTextField)
-                        .addComponent(NamaPerusahaanTextField)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-                        .addComponent(NoTeleponTextField)
-                        .addComponent(NoFaxTextField)
-                        .addComponent(EmailTextField)
-                        .addComponent(BentukBadanHukumComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(errorKJU)
-                        .addComponent(KodeKJUTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(tahunTextField)
+                    .addComponent(provinsiComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kabKotComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kecamatanComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(noUrutTextField)
+                    .addComponent(namaPerusahaanTextField)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                    .addComponent(noTeleponTextField)
+                    .addComponent(noFaxTextField)
+                    .addComponent(emailTextField)
+                    .addComponent(bentukBadanHukumComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(errorKJU)
+                    .addComponent(kodeKJUTextField, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(47, 47, 47))
         );
         KIPPanelLayout.setVerticalGroup(
@@ -446,70 +564,82 @@ public class AdminInsert extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TahunLabel)
-                    .addComponent(TahunTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tahunTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(errorTahun)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(KIPPanelLayout.createSequentialGroup()
                         .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ProvinsiComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(provinsiComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ProvinsiLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(KabKotaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kabKotComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(KabKotaLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(KecamatanComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(kecamatanComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(KecamatanLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KodeKJUTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kodeKJUTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(KodeKJULabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(errorKJU)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NoUrutTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noUrutTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NoUrutLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorNoKabKot)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorNoKabKot)
+                    .addComponent(space))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NamaPerusahaanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaPerusahaanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NamaPerusahaanLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorPerusahaan)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorPerusahaan)
+                    .addComponent(space1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AlamatLabel)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorAlamat)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorAlamat)
+                    .addComponent(space5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NoTeleponTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noTeleponTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NoTelepoLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorTelepon)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorTelepon)
+                    .addComponent(space2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NoFaxTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noFaxTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NoFaxLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorFax)
+                .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorFax)
+                    .addComponent(space3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmailLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(KIPPanelLayout.createSequentialGroup()
-                        .addComponent(errorEmail)
+                        .addGroup(KIPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(errorEmail)
+                            .addComponent(space4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BentukBadanHukumComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(bentukBadanHukumComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(BentukBadanHukumLabel))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         DPPPanel.setBackground(new java.awt.Color(236, 248, 249));
@@ -536,7 +666,7 @@ public class AdminInsert extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         StatusPerusahaanLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -569,80 +699,100 @@ public class AdminInsert extends javax.swing.JFrame {
         UsahaUtamaLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         UsahaUtamaLabel.setText("Jenis Usaha Utama");
 
-        StatuKunjunganBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sudah dikunjungi/mendapatkan informasi dari pihak lain(dinas,dll)", "Belum dikonfirmasi keberadaannya" }));
+        statusKunjunganComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sudah dikunjungi/mendapatkan informasi dari pihak lain(dinas,dll)", "Belum dikonfirmasi keberadaannya" }));
+        statusKunjunganComboBox.setSelectedIndex(-1);
 
-        StatusPerusahanBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Tutup Sementara/Tidak Ada Kegiatan", "Belum Berproduksi", "Tidak Bersedia Diwawancarai", "Alih Usaha ke Non Pertanian", "Tutup", "Tidak Ditemukan", "Baru", "Ganda", " ", " " }));
+        statusPerusahaanComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Tutup Sementara/Tidak Ada Kegiatan", "Belum Berproduksi", "Tidak Bersedia Diwawancarai", "Alih Usaha ke Non Pertanian", "Tutup", "Tidak Ditemukan", "Baru", "Ganda", " ", " " }));
+        statusPerusahaanComboBox.setSelectedIndex(-1);
 
-        TanamanPanganComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        tanamanPanganComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        tanamanPanganComboBox.setSelectedIndex(-1);
 
-        HortikulturaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        hortikulturaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        hortikulturaComboBox.setSelectedIndex(-1);
 
-        KakaoCokelatCheckBox.setText("3a-Kakao/Cokelat");
+        aCheckBox.setText("3a-Kakao/Cokelat");
 
-        KaretCheckBox.setText("3b-Karet");
-        KaretCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        bCheckBox.setText("3b-Karet");
+        bCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KaretCheckBoxActionPerformed(evt);
+                bCheckBoxActionPerformed(evt);
             }
         });
 
-        KelapaSawitCheckBox.setText("3c-Kelapa Sawit");
+        cCheckBox.setText("3c-Kelapa Sawit");
 
-        KopiCheckBox.setText("3d-Kopi");
+        dCheckBox.setText("3d-Kopi");
 
-        TehCheckBox.setText("3e-Teh");
+        eCheckBox.setText("3e-Teh");
 
-        TebuCheckBox.setText("3f-Tebu");
+        fCheckBox.setText("3f-Tebu");
 
-        TembakauCheckBox.setText("3g-Tembakau");
+        gCheckBox.setText("3g-Tembakau");
 
-        CengkehCheckBox.setText("3h-Cengkeh");
-        CengkehCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        hCheckBox.setText("3h-Cengkeh");
+        hCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CengkehCheckBoxActionPerformed(evt);
+                hCheckBoxActionPerformed(evt);
             }
         });
 
-        KelapaCheckBox.setText("3i-Kelapa");
+        iCheckBox.setText("3i-Kelapa");
 
-        LadaCheckBox.setText("3j-Lada");
+        jCheckBox.setText("3j-Lada");
 
-        TanamanLainCheckBox.setText("3k-Tanaman Lain");
-        TanamanLainCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        kCheckBox.setText("3k-Tanaman Lain");
+        kCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TanamanLainCheckBoxActionPerformed(evt);
+                kCheckBoxActionPerformed(evt);
             }
         });
 
-        PeternakanComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        peternakanComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        peternakanComboBox.setSelectedIndex(-1);
 
-        PerikananComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tida Ada", "Ada" }));
+        perikananComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tida Ada", "Ada" }));
+        perikananComboBox.setSelectedIndex(-1);
 
-        KehutananComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        kehutananComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        kehutananComboBox.setSelectedIndex(-1);
 
-        UsahaUtamaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        usahaUtamaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        usahaUtamaComboBox.setSelectedIndex(-1);
 
         InsertButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         InsertButton.setForeground(new java.awt.Color(229, 88, 7));
         InsertButton.setText("Insert");
+        InsertButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InsertButtonActionPerformed(evt);
+            }
+        });
+
+        hapusButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        hapusButton.setForeground(new java.awt.Color(229, 88, 7));
+        hapusButton.setText("Hapus Data");
+        hapusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DPPPanelLayout = new javax.swing.GroupLayout(DPPPanel);
         DPPPanel.setLayout(DPPPanelLayout);
         DPPPanelLayout.setHorizontalGroup(
             DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DPPPanelLayout.createSequentialGroup()
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(DPPPanelLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(hapusButton, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
                         .addComponent(InsertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(DPPPanelLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DPPPanelLayout.createSequentialGroup()
-                                .addComponent(StatusPerusahaanLabel)
-                                .addGap(164, 164, 164)
-                                .addComponent(StatusPerusahanBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(DPPPanelLayout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -655,35 +805,39 @@ public class AdminInsert extends javax.swing.JFrame {
                                     .addComponent(UsahaUtamaLabel))
                                 .addGap(130, 130, 130)
                                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(UsahaUtamaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(TanamanPanganComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(HortikulturaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(PerikananComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(KehutananComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(usahaUtamaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tanamanPanganComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(hortikulturaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(perikananComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(kehutananComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(DPPPanelLayout.createSequentialGroup()
                                         .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(KaretCheckBox)
-                                            .addComponent(KakaoCokelatCheckBox)
-                                            .addComponent(KelapaSawitCheckBox)
-                                            .addComponent(KopiCheckBox)
-                                            .addComponent(TehCheckBox)
-                                            .addComponent(TebuCheckBox))
+                                            .addComponent(bCheckBox)
+                                            .addComponent(aCheckBox)
+                                            .addComponent(cCheckBox)
+                                            .addComponent(dCheckBox)
+                                            .addComponent(eCheckBox)
+                                            .addComponent(fCheckBox))
                                         .addGap(18, 18, 18)
                                         .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(CengkehCheckBox)
-                                            .addComponent(TembakauCheckBox)
-                                            .addComponent(KelapaCheckBox)
-                                            .addComponent(LadaCheckBox)
-                                            .addComponent(TanamanLainCheckBox))
+                                            .addComponent(hCheckBox)
+                                            .addComponent(gCheckBox)
+                                            .addComponent(iCheckBox)
+                                            .addComponent(jCheckBox)
+                                            .addComponent(kCheckBox))
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(PeternakanComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(peternakanComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(DPPPanelLayout.createSequentialGroup()
+                                .addComponent(StatusKunjunganLabel)
+                                .addGap(164, 164, 164)
+                                .addComponent(statusKunjunganComboBox, 0, 1, Short.MAX_VALUE))
                             .addGroup(DPPPanelLayout.createSequentialGroup()
                                 .addComponent(SubsektorLabel)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(DPPPanelLayout.createSequentialGroup()
-                                .addComponent(StatusKunjunganLabel)
-                                .addGap(164, 164, 164)
-                                .addComponent(StatuKunjunganBox, 0, 1, Short.MAX_VALUE)))))
+                                .addComponent(StatusPerusahaanLabel)
+                                .addGap(166, 166, 166)
+                                .addComponent(statusPerusahaanComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(48, 48, 48))
         );
         DPPPanelLayout.setVerticalGroup(
@@ -693,62 +847,64 @@ public class AdminInsert extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StatusKunjunganLabel)
-                    .addComponent(StatuKunjunganBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statusKunjunganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(StatusPerusahanBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusPerusahaanComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StatusPerusahaanLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SubsektorLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TanamanPanganLabel)
-                    .addComponent(TanamanPanganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tanamanPanganComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(HortikulturaLabel)
-                    .addComponent(HortikulturaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(hortikulturaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PerkebunanLabel)
-                    .addComponent(KakaoCokelatCheckBox)
-                    .addComponent(TembakauCheckBox))
+                    .addComponent(aCheckBox)
+                    .addComponent(gCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KaretCheckBox)
-                    .addComponent(CengkehCheckBox))
+                    .addComponent(bCheckBox)
+                    .addComponent(hCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KelapaSawitCheckBox)
-                    .addComponent(KelapaCheckBox))
+                    .addComponent(cCheckBox)
+                    .addComponent(iCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KopiCheckBox)
-                    .addComponent(LadaCheckBox))
+                    .addComponent(dCheckBox)
+                    .addComponent(jCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TehCheckBox)
-                    .addComponent(TanamanLainCheckBox))
+                    .addComponent(eCheckBox)
+                    .addComponent(kCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TebuCheckBox)
+                .addComponent(fCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PeternakanComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(peternakanComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PeternakanLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(KehutananLabel)
-                    .addComponent(KehutananComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kehutananComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PerikananLabel)
-                    .addComponent(PerikananComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(perikananComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UsahaUtamaLabel)
-                    .addComponent(UsahaUtamaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(InsertButton)
+                    .addComponent(usahaUtamaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InsertButton)
+                    .addComponent(hapusButton))
                 .addGap(50, 50, 50))
         );
 
@@ -758,7 +914,7 @@ public class AdminInsert extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(KIPPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                .addComponent(KIPPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(DPPPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -821,22 +977,402 @@ public class AdminInsert extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TahunTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TahunTextFieldActionPerformed
+    private void tahunTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tahunTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TahunTextFieldActionPerformed
+    }//GEN-LAST:event_tahunTextFieldActionPerformed
 
-    private void KaretCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KaretCheckBoxActionPerformed
+    private void bCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCheckBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_KaretCheckBoxActionPerformed
+    }//GEN-LAST:event_bCheckBoxActionPerformed
 
-    private void CengkehCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CengkehCheckBoxActionPerformed
+    private void hCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hCheckBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CengkehCheckBoxActionPerformed
+    }//GEN-LAST:event_hCheckBoxActionPerformed
 
-    private void TanamanLainCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TanamanLainCheckBoxActionPerformed
+    private void kCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kCheckBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TanamanLainCheckBoxActionPerformed
+    }//GEN-LAST:event_kCheckBoxActionPerformed
 
+    private void provinsiComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provinsiComboBoxActionPerformed
+        
+        getKabKot();
+//        kabKotComboBox.setSelectedIndex(-1);
+    }//GEN-LAST:event_provinsiComboBoxActionPerformed
+
+    private void kabKotComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kabKotComboBoxActionPerformed
+        getKecamatan();
+//        kecamatanComboBox.setSelectedIndex(-1);
+    }//GEN-LAST:event_kabKotComboBoxActionPerformed
+
+    private void InsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertButtonActionPerformed
+        if (!ValidasiNull()){
+            JOptionPane.showMessageDialog(null, "Semua input harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }  
+        if (ValidasiInput()==true) { 
+            try {
+                String tahun = tahunTextField.getText();
+                String selectedItem = (String) provinsiComboBox.getSelectedItem();
+                String provinsi = selectedItem.substring(0, 2);
+                selectedItem = (String) kabKotComboBox.getSelectedItem();
+                String kabKot = selectedItem.substring(0, 4);
+                selectedItem = (String) kecamatanComboBox.getSelectedItem();
+                String kecamatan = selectedItem.substring(0, 7);
+                String kode_kju = kodeKJUTextField.getText();
+                String no_urut = noUrutTextField.getText();
+                String nama = namaPerusahaanTextField.getText();
+                String alamat = alamatTextArea.getText();
+                String no_telp = noTeleponTextField.getText();
+                String no_fax = noFaxTextField.getText();
+                String email = emailTextField.getText();
+                int kode = bentukBadanHukumComboBox.getSelectedIndex() + 1;
+                String badanHukum = "" + kode;
+                kode = statusKunjunganComboBox.getSelectedIndex();
+                String statusKunjungan = "" + kode;
+                kode = statusPerusahaanComboBox.getSelectedIndex() + 1;
+                String statusPerusahaan = "" + kode;
+                kode = tanamanPanganComboBox.getSelectedIndex();
+                String tanamanPangan = "" + kode;
+                kode = hortikulturaComboBox.getSelectedIndex();
+                String hortikultura = "" + kode;
+
+                JCheckBox[] checkboxes = { aCheckBox, bCheckBox, cCheckBox, dCheckBox, eCheckBox, fCheckBox, gCheckBox, hCheckBox, iCheckBox, jCheckBox, kCheckBox };
+
+                String perkebunan = "";
+                for (int i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].isSelected()) {
+                        if (!perkebunan.isEmpty()) {
+                            perkebunan += ",";
+                        }
+                        perkebunan += "3" + (char) ('a' + i);
+                    }
+                }
+                kode = peternakanComboBox.getSelectedIndex();
+                String peternakan = "" + kode;
+                kode = kehutananComboBox.getSelectedIndex();
+                String kehutanan = "" + kode;
+                kode = perikananComboBox.getSelectedIndex();
+                String perikanan = "" + kode;
+                kode = usahaUtamaComboBox.getSelectedIndex() + 1;
+                String usahaUtama = "" + kode;
+
+                String myQuery = "INSERT INTO `perusahaan`(`tahun`, `provinsi`, `kab_kot`, `kec`, `kode_kju`, `no_urut`, `nama`, `alamat`, `no_telp`, `no_fak`, `badan_hukum`, `sudah_dikunjungi`, `status`, `ada_tanaman_pangan`, `ada_hortikultura`, `perkebunan`, `ada_peternakan`, `ada_kehutanan`, `ada_perikanan`, `jenis_usaha`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                pstmt = conn.prepareStatement(myQuery);
+                pstmt.setString(1, tahun);
+                pstmt.setString(2, provinsi);
+                pstmt.setString(3, kabKot);
+                pstmt.setString(4, kecamatan);
+                pstmt.setString(5, kode_kju);
+                pstmt.setString(6, no_urut);
+                pstmt.setString(7, nama);
+                pstmt.setString(8, alamat);
+                pstmt.setString(9, no_telp);
+                pstmt.setString(10, no_fax);
+                pstmt.setString(11, badanHukum);
+                pstmt.setString(12, statusKunjungan);
+                pstmt.setString(13, statusPerusahaan);
+                pstmt.setString(14, tanamanPangan);
+                pstmt.setString(15, hortikultura);
+                pstmt.setString(16, perkebunan);
+                pstmt.setString(17, peternakan);
+                pstmt.setString(18, kehutanan);
+                pstmt.setString(19, perikanan);
+                pstmt.setString(20, usahaUtama);
+                pstmt.executeUpdate();
+
+                hapus();
+
+                pstmt.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Data yang anda Inputkan Belum Sesuai!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+    }//GEN-LAST:event_InsertButtonActionPerformed
+
+    private void hapus(){
+            provinsiComboBox.setSelectedIndex(-1);
+            kabKotComboBox.setSelectedIndex(-1);
+            kecamatanComboBox.setSelectedIndex(-1);
+            kodeKJUTextField.setText("");
+            noUrutTextField.setText("");
+            namaPerusahaanTextField.setText("");
+            alamatTextArea.setText("");
+            noTeleponTextField.setText("");
+            noFaxTextField.setText("");
+            emailTextField.setText(""); 
+            bentukBadanHukumComboBox.setSelectedIndex(-1);
+            statusKunjunganComboBox.setSelectedIndex(-1);
+            statusPerusahaanComboBox.setSelectedIndex(-1);
+            tanamanPanganComboBox.setSelectedIndex(-1);
+            hortikulturaComboBox.setSelectedIndex(-1);
+            
+            JCheckBox[] checkboxes = { aCheckBox, bCheckBox, cCheckBox, dCheckBox, eCheckBox, fCheckBox, gCheckBox, hCheckBox, iCheckBox, jCheckBox, kCheckBox };            
+            String perkebunan = "";
+            for (int i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].setSelected(false) ;
+            }
+            peternakanComboBox.setSelectedIndex(-1);
+            kehutananComboBox.setSelectedIndex(-1);
+            perikananComboBox.setSelectedIndex(-1);
+            usahaUtamaComboBox.setSelectedIndex(-1);
+         
+    }
+    private void noUrutTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noUrutTextFieldKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_noUrutTextFieldKeyReleased
+
+    private void namaPerusahaanTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_namaPerusahaanTextFieldKeyReleased
+        // TODO add your handling code here:
+        if(Validasi.cekNamaPerusahaan(namaPerusahaanTextField.getText())==false){
+           errorPerusahaan.setVisible(true);
+           validasi=false;
+       }else{
+            errorPerusahaan.setVisible(false);
+            validasi=true;
+       }
+    }//GEN-LAST:event_namaPerusahaanTextFieldKeyReleased
+
+    private void alamatTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_alamatTextAreaKeyReleased
+        // TODO add your handling code here:
+           if(Validasi.cekAlamatPerusahaan(alamatTextArea.getText())==false){
+                errorAlamat.setVisible(true);
+                validasi=false;
+           }
+           else{
+               errorAlamat.setVisible(false);
+               validasi=true;
+           }
+    }//GEN-LAST:event_alamatTextAreaKeyReleased
+
+    private void noTeleponTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noTeleponTextFieldKeyReleased
+        // TODO add your handling code here:
+        if(Validasi.cekNoTelepon(noTeleponTextField.getText())==false){
+           errorTelepon.setVisible(true);
+           validasi=false;
+       }else{
+           errorTelepon.setVisible(false);
+           validasi=true;
+       }
+    }//GEN-LAST:event_noTeleponTextFieldKeyReleased
+
+    private void noFaxTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noFaxTextFieldKeyReleased
+        // TODO add your handling code here:
+        if(Validasi.cekFaksimili(noFaxTextField.getText())==false){
+           errorFax.setVisible(true);
+           validasi=false;
+       }else{
+            errorFax.setVisible(false);
+            validasi=true;
+       }
+    }//GEN-LAST:event_noFaxTextFieldKeyReleased
+
+    private void emailTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailTextFieldKeyReleased
+        // TODO add your handling code here:
+        if(Validasi.cekEmail(emailTextField.getText())==false){
+           errorEmail.setVisible(true);
+           validasi=false;
+       } else{
+            errorEmail.setVisible(false);
+            validasi=true;
+        }
+    }//GEN-LAST:event_emailTextFieldKeyReleased
+
+    private void hapusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusButtonActionPerformed
+        // TODO add your handling code here:
+        hapus();
+    }//GEN-LAST:event_hapusButtonActionPerformed
+
+    private void getTahun(){
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        tahunTextField.setText(String.valueOf(currentYear));
+        tahunTextField.setEditable(false);
+    }
+    
+    public Boolean ValidasiInput(){
+        if(Validasi.cekKodeKJU(kodeKJUTextField.getText())==false){
+            return false;
+        }
+        if(Validasi.cekNoUrut(noUrutTextField.getText())==false){
+            return false;
+        }
+        if(Validasi.cekNamaPerusahaan(namaPerusahaanTextField.getText())==false){
+            return false;
+        }
+        if(Validasi.cekAlamatPerusahaan(alamatTextArea.getText())==false){
+           return false;
+       }
+        if(Validasi.cekNoTelepon(noTeleponTextField.getText())==false){
+           return false;
+       }
+        if(Validasi.cekFaksimili(noFaxTextField.getText())==false){
+           return false;
+       }
+        if(Validasi.cekEmail(emailTextField.getText())==false){
+           return false;
+       } 
+        return true;
+    }
+    
+    public Boolean ValidasiNull() {
+        if (provinsiComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (kabKotComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (kecamatanComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (kodeKJUTextField.getText().isEmpty()) {
+            return false;
+        }
+        if (namaPerusahaanTextField.getText().isEmpty()) {
+            return false;
+        }
+        if (alamatTextArea.getText().isEmpty()) {
+            return false;
+        }
+        if (noTeleponTextField.getText().isEmpty()) {
+            return false;
+        }
+        if (noFaxTextField.getText().isEmpty()) {
+            return false;
+        }
+        if (emailTextField.getText().isEmpty()) {
+            return false;
+        }
+        if (bentukBadanHukumComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (statusKunjunganComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (statusPerusahaanComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (tanamanPanganComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (hortikulturaComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (peternakanComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (kehutananComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (perikananComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        if (usahaUtamaComboBox.getSelectedIndex() == -1) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    private void getKecamatan() {
+        if(kabKotComboBox.getSelectedItem()!=null){
+
+        String selectedItem = (String) kabKotComboBox.getSelectedItem();
+        String selectedKabKot = selectedItem.substring(0, 4) + "%";
+
+        kecamatanComboBox.removeAllItems();
+
+        // Mengambil data kabupaten/kota berdasarkan provinsi yang dipilih
+        try {
+            String myQuery = "SELECT kode_bps,nama_bps FROM m_kecamatan WHERE kode_bps LIKE ? ";
+            pstmt = conn.prepareStatement(myQuery);
+            pstmt.setString(1, selectedKabKot);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Menambahkan data kabupaten/kota ke dalam JComboBox kabupaten
+            while (rs.next()) {
+                String namaKecamatan = rs.getString("nama_bps");
+                String kodeKecamatan = rs.getString("kode_bps");
+                kecamatanComboBox.addItem(kodeKecamatan+"-"+namaKecamatan);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        }
+    }
+    
+    private void getKabKot() {
+        // Mendapatkan provinsi yang dipilih
+        if(provinsiComboBox.getSelectedItem()!=null){
+        String selectedItem = (String) provinsiComboBox.getSelectedItem();
+        String selectedProvinsi = selectedItem.substring(0, 2) + "%";
+
+
+        // Menghapus item sebelumnya dari JComboBox kabupaten
+        kabKotComboBox.removeAllItems();
+
+        // Mengambil data kabupaten/kota berdasarkan provinsi yang dipilih
+        try {
+            String myQuery = "SELECT nama_dagri, kode_bps FROM m_kabupaten WHERE kode_bps LIKE ?";
+            pstmt = conn.prepareStatement(myQuery);
+            pstmt.setString(1, selectedProvinsi);
+            ResultSet rs = pstmt.executeQuery();
+
+            // Menambahkan data kabupaten/kota ke dalam JComboBox kabupaten
+            while (rs.next()) {
+                String namaKabupaten = rs.getString("nama_dagri");
+                String kodeKabupaten = rs.getString("kode_bps");
+                kabKotComboBox.addItem(kodeKabupaten + " - " + namaKabupaten);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        }
+    }
+    
+    private void getProvinsi() {
+    try {
+        String myQuery = "SELECT * FROM m_provinsi ORDER BY nama_bps";
+        pstmt = conn.prepareStatement(myQuery);
+        ResultSet rs = pstmt.executeQuery();
+
+        ArrayList<String> provinsiList = new ArrayList<>();
+        while (rs.next()) {
+            String kodeProv = rs.getString("kode_bps");
+            String namaProvinsi = rs.getString("nama_bps");
+            provinsiList.add(kodeProv + " - " + namaProvinsi);
+        }
+
+        // Mengganti model JComboBox provinsiComboBox dengan data provinsi yang baru
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(provinsiList.toArray(new String[0]));
+        provinsiComboBox.setModel(comboBoxModel);
+        provinsiComboBox.setSelectedIndex(-1);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Menutup semua objek JDBC
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+  
+    
     /**
      * @param args the command line arguments
      */
@@ -886,66 +1422,44 @@ public class AdminInsert extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AlamatLabel;
-    private javax.swing.JTextArea AlamatTextArea;
-    private javax.swing.JComboBox<String> BentukBadanHukumComboBox;
     private javax.swing.JLabel BentukBadanHukumLabel;
-    private javax.swing.JCheckBox CengkehCheckBox;
     private javax.swing.JPanel DPPPanel;
     private javax.swing.JLabel EmailLabel;
-    private javax.swing.JTextField EmailTextField;
-    private javax.swing.JComboBox<String> HortikulturaComboBox;
     private javax.swing.JLabel HortikulturaLabel;
     private javax.swing.JButton InsertButton;
     private javax.swing.JLabel KIPJudulLabel;
     private javax.swing.JPanel KIPJudulPanel;
     private javax.swing.JPanel KIPPanel;
-    private javax.swing.JComboBox<String> KabKotaComboBox;
     private javax.swing.JLabel KabKotaLabel;
-    private javax.swing.JCheckBox KakaoCokelatCheckBox;
-    private javax.swing.JCheckBox KaretCheckBox;
-    private javax.swing.JComboBox<String> KecamatanComboBox;
     private javax.swing.JLabel KecamatanLabel;
-    private javax.swing.JComboBox<String> KehutananComboBox;
     private javax.swing.JLabel KehutananLabel;
-    private javax.swing.JCheckBox KelapaCheckBox;
-    private javax.swing.JCheckBox KelapaSawitCheckBox;
     private javax.swing.JLabel KodeKJULabel;
-    private javax.swing.JTextField KodeKJUTextField;
-    private javax.swing.JCheckBox KopiCheckBox;
-    private javax.swing.JCheckBox LadaCheckBox;
     private javax.swing.JLabel NamaPerusahaanLabel;
-    private javax.swing.JTextField NamaPerusahaanTextField;
     private javax.swing.JLabel NoFaxLabel;
-    private javax.swing.JTextField NoFaxTextField;
     private javax.swing.JLabel NoTelepoLabel;
-    private javax.swing.JTextField NoTeleponTextField;
     private javax.swing.JLabel NoUrutLabel;
-    private javax.swing.JTextField NoUrutTextField;
-    private javax.swing.JComboBox<String> PerikananComboBox;
     private javax.swing.JLabel PerikananLabel;
     private javax.swing.JLabel PerkebunanLabel;
-    private javax.swing.JComboBox<String> PeternakanComboBox;
     private javax.swing.JLabel PeternakanLabel;
-    private javax.swing.JComboBox<String> ProvinsiComboBox;
     private javax.swing.JLabel ProvinsiLabel;
-    private javax.swing.JComboBox<String> StatuKunjunganBox;
     private javax.swing.JLabel StatusKunjunganLabel;
     private javax.swing.JLabel StatusPerusahaanLabel;
-    private javax.swing.JComboBox<String> StatusPerusahanBox;
     private javax.swing.JLabel SubsektorLabel;
     private javax.swing.JLabel TahunLabel;
-    private javax.swing.JTextField TahunTextField;
-    private javax.swing.JCheckBox TanamanLainCheckBox;
-    private javax.swing.JComboBox<String> TanamanPanganComboBox;
     private javax.swing.JLabel TanamanPanganLabel;
-    private javax.swing.JCheckBox TebuCheckBox;
-    private javax.swing.JCheckBox TehCheckBox;
-    private javax.swing.JCheckBox TembakauCheckBox;
-    private javax.swing.JComboBox<String> UsahaUtamaComboBox;
     private javax.swing.JLabel UsahaUtamaLabel;
+    private javax.swing.JCheckBox aCheckBox;
+    private javax.swing.JTextArea alamatTextArea;
+    private javax.swing.JCheckBox bCheckBox;
+    private javax.swing.JComboBox<String> bentukBadanHukumComboBox;
+    private javax.swing.JCheckBox cCheckBox;
+    private javax.swing.JCheckBox dCheckBox;
+    private javax.swing.JCheckBox eCheckBox;
+    private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel errorAlamat;
     private javax.swing.JLabel errorEmail;
     private javax.swing.JLabel errorFax;
@@ -954,7 +1468,14 @@ public class AdminInsert extends javax.swing.JFrame {
     private javax.swing.JLabel errorPerusahaan;
     private javax.swing.JLabel errorTahun;
     private javax.swing.JLabel errorTelepon;
+    private javax.swing.JCheckBox fCheckBox;
+    private javax.swing.JCheckBox gCheckBox;
+    private javax.swing.JCheckBox hCheckBox;
+    private javax.swing.JButton hapusButton;
+    private javax.swing.JComboBox<String> hortikulturaComboBox;
+    private javax.swing.JCheckBox iCheckBox;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -975,5 +1496,28 @@ public class AdminInsert extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JCheckBox kCheckBox;
+    private javax.swing.JComboBox<String> kabKotComboBox;
+    private javax.swing.JComboBox<String> kecamatanComboBox;
+    private javax.swing.JComboBox<String> kehutananComboBox;
+    private javax.swing.JTextField kodeKJUTextField;
+    private javax.swing.JTextField namaPerusahaanTextField;
+    private javax.swing.JTextField noFaxTextField;
+    private javax.swing.JTextField noTeleponTextField;
+    private javax.swing.JTextField noUrutTextField;
+    private javax.swing.JComboBox<String> perikananComboBox;
+    private javax.swing.JComboBox<String> peternakanComboBox;
+    private javax.swing.JComboBox<String> provinsiComboBox;
+    private javax.swing.JLabel space;
+    private javax.swing.JLabel space1;
+    private javax.swing.JLabel space2;
+    private javax.swing.JLabel space3;
+    private javax.swing.JLabel space4;
+    private javax.swing.JLabel space5;
+    private javax.swing.JComboBox<String> statusKunjunganComboBox;
+    private javax.swing.JComboBox<String> statusPerusahaanComboBox;
+    private javax.swing.JTextField tahunTextField;
+    private javax.swing.JComboBox<String> tanamanPanganComboBox;
+    private javax.swing.JComboBox<String> usahaUtamaComboBox;
     // End of variables declaration//GEN-END:variables
 }

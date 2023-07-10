@@ -4,17 +4,28 @@
  */
 package gui;
 
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hamda
  */
 public class AdminView extends javax.swing.JFrame {
-
+    private Connection conn;
+//    private DefaultTableModel model;
+    private PreparedStatement pstmt;
+    private Statement stat;
+    private ResultSet rs;
     /**
      * Creates new form ProfileAdmin
      */
     public AdminView() {
         initComponents();
+        conn=connection.getConnection();
+        System.out.println("ini masuk admin view");
+        viewTable();
+        
     }
 
     /**
@@ -46,7 +57,7 @@ public class AdminView extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        perusahaanTable = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
@@ -189,7 +200,7 @@ public class AdminView extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        perusahaanTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -197,7 +208,7 @@ public class AdminView extends javax.swing.JFrame {
                 "No", "<html> Kode <br> Prov. </html>", "<html> Kode <br> Kab. </html>", "<html> Kode <br> Kec. </html>", "<html> Kode <br> KJU </html>", "<html>     No. <br>      Urut <br>     dalam <br>     satu <br>     Kab/ <br>     Kota  </html>", "<html>     Nama <br>     Perusahaan <br>     Pertanian </html>", "<html>     Alamat <br>     Perusahaan <br>     Pertanian </html>", "<html>     No <br>     Telepon </html>", "<html>     No <br>     Faksimili <br> </html>", "<html>     Bentuk <br>     Badan <br>     Hukum </html>", "<html>Konfirmasi<br>Kunjungan</html>", "<html>Status<br>Perusahaan</html>", "<html>Tanaman<br>Pangan</html>", "<html>Hortikultura</html>", "<html>Perkebunan</html>", "Peternakan", "Kehutanan", "Perikanan", "<html>Jenis<br>Usaha<br>Utama</html>"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(perusahaanTable);
 
         jButton3.setText("Export File (.csv)");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -330,6 +341,66 @@ public class AdminView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+private void viewTable() {
+    DefaultTableModel tb = new DefaultTableModel();
+    tb.addColumn("No");
+    tb.addColumn("Kode Prov");
+    tb.addColumn("Kode Kab");
+    tb.addColumn("Kode Kec");
+    tb.addColumn("Kode KJU");
+    tb.addColumn("No. Urut dalam satu kab/kot");
+    tb.addColumn("Nama Perusahaan");
+    tb.addColumn("Alamat Perusahaan");
+    tb.addColumn("No. Telp");
+    tb.addColumn("No. Faks");
+    tb.addColumn("Bentuk Badan Hukum");
+    tb.addColumn("Konfirmasi Kunjungan");
+    tb.addColumn("Status Perusahaan");
+    tb.addColumn("Tanaman Pangan");
+    tb.addColumn("Holtikultura");
+    tb.addColumn("Perkebunan");
+    tb.addColumn("Peternakan");
+    tb.addColumn("Kehutanan");
+    tb.addColumn("Perikanan");
+    tb.addColumn("Jenis Usaha Utama");
+    perusahaanTable.setModel(tb);
+
+    try {
+        // Mengambil data dari database
+       Statement stat = conn.createStatement();
+       ResultSet rs = stat.executeQuery("SELECT * FROM perusahaan");
+       int i = 1;
+       while (rs.next()) {
+           tb.addRow(new Object[]{
+               i,
+               rs.getString("provinsi"),
+               rs.getString("kab_kot"),
+               rs.getString("kec"),
+               rs.getString("kode_kju"),
+               rs.getString("no_urut"),
+               rs.getString("nama"),
+               rs.getString("alamat"),
+               rs.getString("no_telp"),
+               rs.getString("no_fak"),
+               rs.getString("badan_hukum"),
+               rs.getString("sudah_dikunjungi"),
+               rs.getString("status"),
+               rs.getString("ada_tanaman_pangan"),
+               rs.getString("ada_hortikultura"),
+               rs.getString("perkebunan"),
+               rs.getString("ada_peternakan"),
+               rs.getString("ada_kehutanan"),
+               rs.getString("ada_perikanan"),
+               rs.getString("jenis_usaha")
+           });
+           i++;
+       }
+
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -355,36 +426,6 @@ public class AdminView extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AdminView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -421,6 +462,6 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable perusahaanTable;
     // End of variables declaration//GEN-END:variables
 }
