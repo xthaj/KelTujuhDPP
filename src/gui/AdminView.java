@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +29,15 @@ public class AdminView extends javax.swing.JFrame {
         viewTable();
         
     }
+    
+    public void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+    
+    public static void openAdminView() {
+        main();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +59,8 @@ public class AdminView extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -175,6 +188,31 @@ public class AdminView extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(229, 88, 7));
         jButton1.setText("LOGOUT");
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 740, 189, 40));
+
+        jPanel21.setBackground(new java.awt.Color(229, 88, 7));
+
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("DELETE");
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel24)
+                .addContainerGap(214, Short.MAX_VALUE))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel24)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 329, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -404,7 +442,7 @@ private void viewTable() {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -448,6 +486,7 @@ private void viewTable() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -456,6 +495,7 @@ private void viewTable() {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;

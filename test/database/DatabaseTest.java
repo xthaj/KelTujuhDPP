@@ -57,7 +57,7 @@ public class DatabaseTest {
         System.out.println("signUp");
 
         // Create a test user
-        User user = new User("12345", "John Doe", "password", "johndoe@example.com", false);
+        User user = new User("112", "John Doe", "password", "johndoe@example.com", false);
 
         // Get the instance of the Database class
         Database instance = Database.getInstance();

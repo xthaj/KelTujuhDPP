@@ -5,6 +5,8 @@
 package gui;
 
 import database.Database;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -22,6 +24,11 @@ public class SignUp extends javax.swing.JFrame {
     public SignUp() {
         initComponents();
          this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    public void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
 
     /**
@@ -49,7 +56,7 @@ public class SignUp extends javax.swing.JFrame {
         emailTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -240,6 +247,13 @@ public class SignUp extends javax.swing.JFrame {
         
         if (!passwordTextField.getText().equals(confirmpasswordTextField.getText())) {
             JOptionPane.showMessageDialog(this, "Password dan Konfirmasi Password tidak sama", "gagal", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (nikTextField.getText().isEmpty() || namaTextField.getText().isEmpty() ||
+            passwordTextField.getText().isEmpty() || emailTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop further execution
         }
 
         User user = new User();
@@ -266,6 +280,8 @@ public class SignUp extends javax.swing.JFrame {
             case 2:
                 // Sign-up successful
                 JOptionPane.showMessageDialog(this, "Sign-up successful!");
+                SignIn.openSignIn();
+                close();
                 // Add any additional logic or navigation after successful sign-up
                 break;
         }

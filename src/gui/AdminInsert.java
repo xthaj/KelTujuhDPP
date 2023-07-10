@@ -4,7 +4,10 @@
  */
 package gui;
 
+import static gui.AdminView.main;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -21,7 +24,6 @@ import keltujuhdpp.entity.Validasi;
  */
 public class AdminInsert extends javax.swing.JFrame {
     private Connection conn;
-//    private DefaultTableModel model;
     private PreparedStatement pstmt;
     private Statement stat;
     private ResultSet rs;
@@ -36,6 +38,12 @@ public class AdminInsert extends javax.swing.JFrame {
         System.out.println("masuk admin insert");
         getTahun();
     }
+    
+    public void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1376,7 +1384,7 @@ public class AdminInsert extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

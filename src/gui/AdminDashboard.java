@@ -26,7 +26,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
-
+    
+    public static void openAdminDashboard(String nik) {
+        AdminDashboard.nik = nik;
+        main();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,13 +47,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         profileSidePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        insertSidePanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        viewSidePanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -138,55 +141,35 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo BPS 200.png"))); // NOI18N
         jPanel15.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
-        jPanel5.setBackground(new java.awt.Color(229, 88, 7));
+        insertSidePanel.setBackground(new java.awt.Color(229, 88, 7));
+        insertSidePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insertSidePanelMouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("INSERT");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout insertSidePanelLayout = new javax.swing.GroupLayout(insertSidePanel);
+        insertSidePanel.setLayout(insertSidePanelLayout);
+        insertSidePanelLayout.setHorizontalGroup(
+            insertSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(insertSidePanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel4)
                 .addContainerGap(216, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        insertSidePanelLayout.setVerticalGroup(
+            insertSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, insertSidePanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addContainerGap())
         );
 
-        jPanel15.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 329, -1));
-
-        jPanel6.setBackground(new java.awt.Color(229, 88, 7));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("UPDATE");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel5)
-                .addContainerGap(205, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addContainerGap())
-        );
-
-        jPanel15.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 329, -1));
+        jPanel15.add(insertSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 329, -1));
 
         jPanel21.setBackground(new java.awt.Color(229, 88, 7));
 
@@ -201,7 +184,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel24)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,30 +196,35 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jPanel15.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 329, -1));
 
-        jPanel7.setBackground(new java.awt.Color(229, 88, 7));
+        viewSidePanel.setBackground(new java.awt.Color(229, 88, 7));
+        viewSidePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewSidePanelMouseClicked(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("VIEW");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout viewSidePanelLayout = new javax.swing.GroupLayout(viewSidePanel);
+        viewSidePanel.setLayout(viewSidePanelLayout);
+        viewSidePanelLayout.setHorizontalGroup(
+            viewSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewSidePanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel8)
                 .addContainerGap(238, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        viewSidePanelLayout.setVerticalGroup(
+            viewSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewSidePanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
         );
 
-        jPanel15.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 329, -1));
+        jPanel15.add(viewSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 329, -1));
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(229, 88, 7));
@@ -541,6 +529,20 @@ public class AdminDashboard extends javax.swing.JFrame {
         AdminProfile.openAdminProfile(nik);
     }//GEN-LAST:event_profileSidePanelMouseClicked
 
+    private void viewSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewSidePanelMouseClicked
+        // TODO add your handling code here:
+        close();
+        AdminView.openAdminView();
+    }//GEN-LAST:event_viewSidePanelMouseClicked
+
+    private void insertSidePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insertSidePanelMouseClicked
+        // TODO add your handling code here:
+//        AdminInsert ai = new AdminInsert 
+    }//GEN-LAST:event_insertSidePanelMouseClicked
+
+    public static void main(String[] args) {
+        openAdminDashboard("1");
+    }
     /**
      * @param args the command line arguments
      */
@@ -580,6 +582,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel insertSidePanel;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -600,7 +603,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -613,15 +615,10 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel profileSidePanel;
+    private javax.swing.JPanel viewSidePanel;
     // End of variables declaration//GEN-END:variables
     
-    public static void openAdminDashboard(String nik) {
-        AdminDashboard.nik = nik;
-        main();
-    }
+    
 }

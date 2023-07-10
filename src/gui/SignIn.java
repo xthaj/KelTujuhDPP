@@ -31,6 +31,14 @@ public class SignIn extends javax.swing.JFrame {
         WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
+    
+    public static void openSignIn() {
+        main();
+    }
+    
+    public static void main(String[] args) {
+        openSignIn();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -236,7 +244,7 @@ public class SignIn extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
