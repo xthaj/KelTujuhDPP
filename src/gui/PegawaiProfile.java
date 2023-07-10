@@ -4,11 +4,19 @@
  */
 package gui;
 
+import database.Database;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import keltujuhdpp.entity.User;
+
 /**
  *
  * @author hamda
  */
 public class PegawaiProfile extends javax.swing.JFrame {
+    private static String nik;
+
 
     /**
      * Creates new form ProfileAdmin
@@ -16,6 +24,22 @@ public class PegawaiProfile extends javax.swing.JFrame {
     public PegawaiProfile() {
         initComponents();
     }
+    
+    public void fillData(String nik) {
+        try {
+            User user = Database.getInstance().getUserByNik(nik);
+            nikUser.setText(user.getNik());
+            namaUser.setText(user.getNama());
+            passwordUser.setText(user.getPw());
+            emailUser.setText(user.getEmail());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminProfile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,10 +61,13 @@ public class PegawaiProfile extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         idLabel = new javax.swing.JLabel();
-        usernameLabel = new javax.swing.JLabel();
+        namaUser = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
-        handphoneLabel = new javax.swing.JLabel();
+        nikUser = new javax.swing.JLabel();
+        usernameLabel1 = new javax.swing.JLabel();
+        passwordUser = new javax.swing.JLabel();
+        emailUser = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -138,12 +165,12 @@ public class PegawaiProfile extends javax.swing.JFrame {
         idLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         idLabel.setForeground(new java.awt.Color(229, 88, 7));
         idLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        idLabel.setText("ID (Nomor Pegawai)");
+        idLabel.setText("NIK");
 
-        usernameLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        usernameLabel.setForeground(new java.awt.Color(229, 88, 7));
-        usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        usernameLabel.setText("Username");
+        namaUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        namaUser.setForeground(new java.awt.Color(229, 88, 7));
+        namaUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        namaUser.setText("Nama");
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         passwordLabel.setForeground(new java.awt.Color(229, 88, 7));
@@ -155,10 +182,25 @@ public class PegawaiProfile extends javax.swing.JFrame {
         emailLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         emailLabel.setText("Email");
 
-        handphoneLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        handphoneLabel.setForeground(new java.awt.Color(229, 88, 7));
-        handphoneLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        handphoneLabel.setText("No Handphone");
+        nikUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        nikUser.setForeground(new java.awt.Color(229, 88, 7));
+        nikUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nikUser.setText("NIK");
+
+        usernameLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        usernameLabel1.setForeground(new java.awt.Color(229, 88, 7));
+        usernameLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        usernameLabel1.setText("Nama");
+
+        passwordUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        passwordUser.setForeground(new java.awt.Color(229, 88, 7));
+        passwordUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        passwordUser.setText("Password");
+
+        emailUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        emailUser.setForeground(new java.awt.Color(229, 88, 7));
+        emailUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        emailUser.setText("Email");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,34 +208,51 @@ public class PegawaiProfile extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(109, 109, 109)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(handphoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(722, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(emailUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(passwordUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nikUser, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(usernameLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(namaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(441, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {emailLabel, handphoneLabel, idLabel, passwordLabel, usernameLabel});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {emailLabel, idLabel, namaUser, passwordLabel});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(183, 183, 183)
-                .addComponent(idLabel)
-                .addGap(16, 16, 16)
-                .addComponent(usernameLabel)
-                .addGap(16, 16, 16)
-                .addComponent(passwordLabel)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idLabel)
+                    .addComponent(nikUser))
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameLabel1)
+                    .addComponent(namaUser))
                 .addGap(18, 18, 18)
-                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(handphoneLabel)
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordLabel)
+                    .addComponent(passwordUser))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailUser, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(475, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {emailLabel, handphoneLabel, idLabel, passwordLabel, usernameLabel});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {emailLabel, idLabel, namaUser, passwordLabel});
 
         jPanel8.setBackground(new java.awt.Color(229, 88, 7));
 
@@ -341,7 +400,7 @@ public class PegawaiProfile extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emailLabel;
-    private javax.swing.JLabel handphoneLabel;
+    private javax.swing.JLabel emailUser;
     private javax.swing.JLabel idLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -355,7 +414,17 @@ public class PegawaiProfile extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JLabel namaUser;
+    private javax.swing.JLabel nikUser;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JLabel usernameLabel;
+    private javax.swing.JLabel passwordUser;
+    private javax.swing.JLabel usernameLabel1;
     // End of variables declaration//GEN-END:variables
+    
+    public static void openPegawaiProfile(String nik) {
+        PegawaiProfile profile = new PegawaiProfile();
+        profile.fillData(nik);
+        profile.setVisible(true);
+    }
+
 }

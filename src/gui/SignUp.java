@@ -2,13 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package pbogroup7;
+package gui;
 
+import database.Database;
 import javax.swing.JFrame;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import keltujuhdpp.entity.User;
 
 /**
  *
- * @author hamda
+ * @author 
  */
 public class SignUp extends javax.swing.JFrame {
 
@@ -31,20 +35,18 @@ public class SignUp extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        signUpButton = new javax.swing.JButton();
         usernameLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         confirmpasswordLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
         idLabel = new javax.swing.JLabel();
-        idTextField = new javax.swing.JTextField();
-        usernameTextField = new javax.swing.JTextField();
+        nikTextField = new javax.swing.JTextField();
+        namaTextField = new javax.swing.JTextField();
         passwordTextField = new javax.swing.JTextField();
         confirmpasswordTextField = new javax.swing.JTextField();
         emailTextField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,21 +67,19 @@ public class SignUp extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setPreferredSize(new java.awt.Dimension(484, 818));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(229, 88, 7));
-        jButton1.setText("SIgn Up");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        signUpButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        signUpButton.setForeground(new java.awt.Color(229, 88, 7));
+        signUpButton.setText("Sign Up");
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                signUpButtonActionPerformed(evt);
             }
         });
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo BPS.png"))); // NOI18N
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(229, 88, 7));
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        usernameLabel.setText("Username");
+        usernameLabel.setText("Nama");
 
         jLabel5.setText("Silahkan daftarkan diri anda");
 
@@ -103,23 +103,14 @@ public class SignUp extends javax.swing.JFrame {
         idLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         idLabel.setText("NIK Pegawai");
 
-        idTextField.setText("\n");
-
-        usernameTextField.setText("\n");
-        usernameTextField.addActionListener(new java.awt.event.ActionListener() {
+        namaTextField.setText("\n");
+        namaTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameTextFieldActionPerformed(evt);
+                namaTextFieldActionPerformed(evt);
             }
         });
 
-        passwordTextField.setText("\n");
-
-        confirmpasswordTextField.setText("\n");
-
         emailTextField.setText("\n");
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo BPS 100.png"))); // NOI18N
-        jLabel7.setText(" ");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(229, 88, 7));
@@ -132,13 +123,8 @@ public class SignUp extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel3)
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(278, 278, 278)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,12 +144,12 @@ public class SignUp extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(namaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addComponent(jLabel5)))
@@ -173,35 +159,27 @@ public class SignUp extends javax.swing.JFrame {
                 .addGap(145, 145, 145))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel5, jLabel7});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel5});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGap(165, 165, 165)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(idLabel))
-                    .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nikTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(usernameLabel))
-                    .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -219,7 +197,7 @@ public class SignUp extends javax.swing.JFrame {
                     .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(78, 78, 78)
-                .addComponent(jButton1))
+                .addComponent(signUpButton))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -257,13 +235,51 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        if (!passwordTextField.getText().equals(confirmpasswordTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "Password dan Konfirmasi Password tidak sama", "gagal", JOptionPane.ERROR_MESSAGE);
+        }
 
-    private void usernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextFieldActionPerformed
+        User user = new User();
+        user.setNik(nikTextField.getText());
+        user.setNama(namaTextField.getText());
+        user.setPw(passwordTextField.getText());
+        user.setEmail(emailTextField.getText());
+        user.setIs_admin(false);
+        
+        try {
+        // Call the signUp method of the Database class
+        int statusCode = Database.getInstance().signUp(user);
+
+        // Handle the sign-up result based on the status code
+        switch (statusCode) {
+            case 0:
+                // Sign-up failed
+                JOptionPane.showMessageDialog(this, "Failed to sign up. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 1:
+                // Nik already exists
+                JOptionPane.showMessageDialog(this, "NIK already exists. Please choose a different NIK.", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                // Sign-up successful
+                JOptionPane.showMessageDialog(this, "Sign-up successful!");
+                // Add any additional logic or navigation after successful sign-up
+                break;
+        }
+        } catch (SQLException ex) {
+            // Handle SQL exception
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred. Please try again later.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_signUpButtonActionPerformed
+
+    private void namaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameTextFieldActionPerformed
+    }//GEN-LAST:event_namaTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,17 +321,15 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel emailLabel;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel idLabel;
-    private javax.swing.JTextField idTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField namaTextField;
+    private javax.swing.JTextField nikTextField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JTextField passwordTextField;
+    private javax.swing.JButton signUpButton;
     private javax.swing.JLabel usernameLabel;
-    private javax.swing.JTextField usernameTextField;
     // End of variables declaration//GEN-END:variables
 }
