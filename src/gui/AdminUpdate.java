@@ -758,7 +758,7 @@ public class AdminUpdate extends javax.swing.JFrame {
         kehutananComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
         kehutananComboBox.setSelectedIndex(-1);
 
-        usahaUtamaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak Ada", "Ada" }));
+        usahaUtamaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1.  Padi/palawija", "2. Hortikultura", "3a. Perkebunan Kakao/cokelat", "3b. Perkebunan Karet", "3c. Perkebunan Kelapa Sawit", "3d. Perkebunan Kopi", "3e. Perkebunan Teh ", "3f. Perkebunan Tebu", "3g. Perkebunan Tembakau ", "3h. Perkebunan Cengkeh", "3i Perkebunan Kelapa ", "3j. Perkebunan Lada", "3k. Tanaman Perkebunan Lainnya", "4. HPH/IUPHHK-HA", "5. HPHT/IUPHHK-HT/Perhutani/Kehutanan lainnya", "6. Penangkaran STL", "7a. Budidaya Udang ", "7b. Budidaya Bandeng", "7c. Budidaya Ikan lainnya  di Laut", "7d. Budidaya ikan di laut  ", "7e.  Budidaya Ikan di Air Tawar", "7f. Budidaya Pembenihan", "8. Penangkapan Ikan", "9. Ternak Sapi Perah", "10. Ternak Besar/Kecil", "11. Unggas", " ", " " }));
         usahaUtamaComboBox.setSelectedIndex(-1);
 
         updateButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -806,7 +806,7 @@ public class AdminUpdate extends javax.swing.JFrame {
                                     .addComponent(UsahaUtamaLabel))
                                 .addGap(130, 130, 130)
                                 .addGroup(DPPPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(usahaUtamaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(usahaUtamaComboBox, 0, 1, Short.MAX_VALUE)
                                     .addComponent(tanamanPanganComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(hortikulturaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(perikananComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
